@@ -6,6 +6,7 @@ import SignupPage from './components/signup/SignupPage'
 import TopBar from './components/layout/TopBar'
 import LogoutPage from './components/logout/LogoutPage'
 import IndexPage from './components/index/IndexPage'
+import BatchForm from './components/batches/BatchForm'
 
 class App extends Component {
   render() {
@@ -15,8 +16,9 @@ class App extends Component {
             <TopBar />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/logout" component={LogoutPage} />
-            <Route exact path="/signup" component={SignupPage} />
+            <Route exact path="/teachers" component={SignupPage} />
             <Route exact path="/index" component={IndexPage} />
+            <Route exact path="/batches/new" component={BatchForm} />
             <Route exact path="/" render={ () => <Redirect to="/index" /> } />
           </div>
       </Router>

@@ -9,6 +9,9 @@ export const USER_LOGOUT = 'USER_LOGOUT'
 export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS'
 export const USER_SIGNUP_FAILED = 'USER_SIGNUP_FAILED'
 
+export const FETCH_USER = 'FETCH_USER'
+
+
 export const logout = () => ({
   type: USER_LOGOUT
 })
@@ -59,4 +62,19 @@ export const signup = (email, password, name, role) => (dispatch, getState) => {
 				console.error(err)
 			}
 		})
+  }
+
+  export const fetchUser = () => (dispatch, getState) => {
+    const state = getState()
+    const jwt = state.currentUser.jwt
+
+    request
+      .get(`${baseUrl}/teacher`)
+      .set('Authorization', `Bearer ${jwt}`)
+      .then(result => {
+        dispatch({
+          type: FETCH_USER,
+          payload: result.body
+        })
+      })
   }

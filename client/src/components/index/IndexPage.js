@@ -1,8 +1,16 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
+import {fetchUser} from '../../actions/users'
+import BatchStart from '../batches/BatchStart'
 
 class IndexPage extends PureComponent {
+
+  componentWillMount() {
+    if (this.props.currentUser) {
+      this.props.fetchUser()
+    }
+  }
 
   render() {
 		if (this.props.currentUser === null) return (
@@ -11,9 +19,10 @@ class IndexPage extends PureComponent {
 
 		return (
 			<div>
-
 				<h1>Welcome</h1>
-        Wellcome
+        Welcome {this.props.currentUser.name}, you are logged in as {this.props.currentUser.role}
+        <br />
+        <BatchStart />
 			</div>
 		)
 	}
@@ -25,4 +34,4 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps)(IndexPage)
+export default connect(mapStateToProps, {fetchUser})(IndexPage)
