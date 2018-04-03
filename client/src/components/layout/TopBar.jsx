@@ -36,19 +36,19 @@ function ButtonAppBar(props) {
             Student Evaluations
           </Typography>
           {
-            location.pathname.indexOf('signup') > 0 &&
-            <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
+            location.pathname.indexOf('teachers') > 0 &&
+            <Button color="inherit" onClick={() => history.push('/logout')}>Log out</Button>
           }
           {
             location.pathname.indexOf('login') > 0 &&
             <Button color="inherit" onClick={() => history.push('/signup')}>Sign up</Button>
           }
           {
-            location.pathname.indexOf('games/') > 0 &&
+            location.pathname.indexOf('index/') > 0 &&
             <Button color="inherit" onClick={() => history.push('/index')}>Home</Button>
           }
           {
-            /games$/.test(location.pathname) &&
+            /index$/.test(location.pathname) &&
             <Button color="inherit" onClick={() => history.push('/logout')}>Log out</Button>
           }
         </Toolbar>

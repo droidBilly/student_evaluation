@@ -37,8 +37,8 @@ let TeacherController = class TeacherController {
             };
         }
     }
-    getTeachers(id) {
-        return entity_1.default.findOneById(id);
+    getTeachers(teacher) {
+        return teacher;
     }
     allTeachers() {
         return entity_1.default.find();
@@ -55,10 +55,10 @@ __decorate([
 ], TeacherController.prototype, "signup", null);
 __decorate([
     routing_controllers_1.Authorized(),
-    routing_controllers_1.Get('/teachers/:id([0-9]+)'),
-    __param(0, routing_controllers_1.Param('id')),
+    routing_controllers_1.Get('/teacher'),
+    __param(0, routing_controllers_1.CurrentUser()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [entity_1.default]),
     __metadata("design:returntype", void 0)
 ], TeacherController.prototype, "getTeachers", null);
 __decorate([

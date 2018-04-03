@@ -15,7 +15,7 @@ class App extends Component {
             <TopBar />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/logout" component={LogoutPage} />
-            <Route exact path="/signup" component={SignupPage} />
+            <Route exact path="/teachers" component={SignupPage} />
             <Route exact path="/index" component={IndexPage} />
             <Route exact path="/" render={ () => <Redirect to="/index" /> } />
           </div>

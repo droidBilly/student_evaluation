@@ -24,11 +24,11 @@ export default class TeacherController {
   }
 
   @Authorized()
-  @Get('/teachers/:id([0-9]+)')
+  @Get('/teacher')
   getTeachers(
-    @Param('id') id: number
+    @CurrentUser() teacher: Teacher,
   ) {
-    return Teacher.findOneById(id)
+    return teacher
   }
 
   @Authorized()
