@@ -8,12 +8,10 @@ export default function (state = {}, {type, payload}) {
       return {
         success: true
       }
-
     case USER_SIGNUP_FAILED:
       return {
         error: payload
       }
-
 		default:
       return state
 	}

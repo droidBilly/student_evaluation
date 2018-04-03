@@ -10,51 +10,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-const bcrypt = require("bcrypt");
-const entity_1 = require("../evaluations/entity");
-let Teacher = class Teacher extends typeorm_1.BaseEntity {
-    async setPassword(rawPassword) {
-        const hash = await bcrypt.hash(rawPassword, 10);
-        this.password = hash;
-    }
-    checkPassword(rawPassword) {
-        return bcrypt.compare(rawPassword, this.password);
-    }
+const entity_1 = require("../students/entity");
+const entity_2 = require("../teachers/entity");
+let Evaluation = class Evaluation extends typeorm_1.BaseEntity {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], Teacher.prototype, "id", void 0);
+], Evaluation.prototype, "id", void 0);
 __decorate([
     class_validator_1.IsString(),
-    typeorm_1.Column('text'),
+    typeorm_1.Column('text', { nullable: true }),
     __metadata("design:type", String)
-], Teacher.prototype, "name", void 0);
+], Evaluation.prototype, "flag", void 0);
 __decorate([
     class_validator_1.IsString(),
-    typeorm_1.Column('text'),
+    typeorm_1.Column('text', { nullable: true }),
     __metadata("design:type", String)
-], Teacher.prototype, "role", void 0);
+], Evaluation.prototype, "remark", void 0);
 __decorate([
-    class_validator_1.IsEmail(),
-    typeorm_1.Column('text'),
-    __metadata("design:type", String)
-], Teacher.prototype, "email", void 0);
+    typeorm_1.Column('text', { nullable: true }),
+    __metadata("design:type", Date)
+], Evaluation.prototype, "date", void 0);
 __decorate([
-    class_validator_1.IsString(),
-    class_validator_1.MinLength(8),
-    typeorm_1.Column('text'),
-    class_transformer_1.Exclude({ toPlainOnly: true }),
-    __metadata("design:type", String)
-], Teacher.prototype, "password", void 0);
+    typeorm_1.ManyToOne(_ => entity_2.default, teacher => teacher.evaluations),
+    __metadata("design:type", entity_2.default)
+], Evaluation.prototype, "teacher", void 0);
 __decorate([
-    typeorm_1.OneToMany(_ => entity_1.Evaluation, evaluation => evaluation.student, { eager: true }),
-    __metadata("design:type", Array)
-], Teacher.prototype, "evaluations", void 0);
-Teacher = __decorate([
+    typeorm_1.ManyToOne(_ => entity_1.Student, student => student.evaluations),
+    __metadata("design:type", entity_1.Student)
+], Evaluation.prototype, "student", void 0);
+Evaluation = __decorate([
     typeorm_1.Entity()
-], Teacher);
-exports.default = Teacher;
+], Evaluation);
+exports.Evaluation = Evaluation;
 //# sourceMappingURL=entity.js.map
