@@ -7,6 +7,7 @@ const jwt_1 = require("./jwt");
 const entity_1 = require("./teachers/entity");
 const controller_1 = require("./teachers/controller");
 const controller_2 = require("./logins/controller");
+const controller_3 = require("./batches/controller");
 const IO = require("socket.io");
 const socketIoJwtAuth = require("socketio-jwt-auth");
 const jwt_2 = require("./jwt");
@@ -20,7 +21,8 @@ routing_controllers_1.useKoaServer(app, {
     cors: true,
     controllers: [
         controller_1.default,
-        controller_2.default
+        controller_2.default,
+        controller_3.default
     ],
     authorizationChecker: (action) => {
         const header = action.request.headers.authorization;
