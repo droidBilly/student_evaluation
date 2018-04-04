@@ -6,6 +6,7 @@ import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
+import EvaluationForm from '../evaluations/EvaluationForm'
 
 class StudentDetail extends PureComponent {
 
@@ -43,8 +44,9 @@ class StudentDetail extends PureComponent {
             <Link className="link" to="/batches/new">Edit Student</Link>
             </Button>
             <Button size="medium">
-            <Link to={`/students/new`}>Add Evaluation</Link>
+            <Link to={`/evaluation/new`}>Add Evaluation</Link>
             </Button>
+            <EvaluationForm />
           </CardContent>
         </Card>
 			</div>
