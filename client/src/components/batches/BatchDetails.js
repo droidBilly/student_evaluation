@@ -16,17 +16,17 @@ class BatchDetail extends PureComponent {
   }
 
   renderStudent = (student) => {
+      if (student.evaluations[0] === undefined) student.evaluations[0] = {flag: 'grey'}
       return (<Card key={student.id} className="batch-card">
         <CardContent>
-        <img src={`${student.profile_pic}`} />
           <Typography variant="headline" component="h2">
             <Link to={`/students/${student.id}`}>
               { student.first_name } {student.last_name}
             </Link>
           </Typography>
+          <img src={`${student.profile_pic}`} />
           <Typography color="textSecondary">
-            Students:  <br />
-            Start: <br />
+            Last evaluation: {student.evaluations[0].flag}
           </Typography>
         </CardContent>
         <CardActions>

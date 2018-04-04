@@ -11,8 +11,8 @@ export class EvaluationForm extends PureComponent {
       this.state.flag,
       this.state.remark,
       this.state.date,
-      {teacher_id: 1}, //teacher_id get from teacher
-			{student_id: 1} //student_id get from student
+      {teacher_id: 1}, //TODO: get from teacher
+			{student_id: 13} //TODO: get from student
     )
 	}
 

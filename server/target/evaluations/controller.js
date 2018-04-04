@@ -14,45 +14,50 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
-const entity_2 = require("../batches/entity");
+const entity_2 = require("../students/entity");
+const entity_3 = require("../teachers/entity");
 let StudentController = class StudentController {
-    async addStudent(student) {
-        const batch = await entity_2.Batch.findOneById(student.batch_id.batch_id);
-        if (!batch)
-            throw new routing_controllers_1.NotFoundError(`Batch with id ${student.batch_id.batch_id} does not exist!`);
-        student.batch = batch;
-        const entity = await entity_1.Student.create(student);
+    async addStudent(evaluation) {
+        const teacher = await entity_3.default.findOneById(evaluation.teacher_id.teacher_id);
+        const student = await entity_2.Student.findOneById(evaluation.student_id.student_id);
+        if (!teacher)
+            throw new routing_controllers_1.NotFoundError(`Teacher with id ${evaluation.teacher_id.teacher_id} does not exist!`);
+        if (!student)
+            throw new routing_controllers_1.NotFoundError(`Student with id ${evaluation.student_id.student_id} does not exist!`);
+        evaluation.teacher = teacher;
+        evaluation.student = student;
+        const entity = await entity_1.Evaluation.create(evaluation);
         return entity.save();
     }
     getStudents() {
-        return entity_1.Student.find();
+        return entity_2.Student.find();
     }
-    getStudent(id) {
-        return entity_1.Student.findOneById(id);
+    getEvaluation(id) {
+        return entity_1.Evaluation.findOneById(id);
     }
 };
 __decorate([
-    routing_controllers_1.Post('/students'),
+    routing_controllers_1.Post('/evaluations'),
     __param(0, routing_controllers_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [entity_1.Student]),
+    __metadata("design:paramtypes", [entity_1.Evaluation]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "addStudent", null);
 __decorate([
     routing_controllers_1.Authorized(),
-    routing_controllers_1.Get('/students'),
+    routing_controllers_1.Get('/evaluation'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "getStudents", null);
 __decorate([
     routing_controllers_1.Authorized(),
-    routing_controllers_1.Get('/students/:id([0-9]+)'),
+    routing_controllers_1.Get('/evaluation/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], StudentController.prototype, "getStudent", null);
+], StudentController.prototype, "getEvaluation", null);
 StudentController = __decorate([
     routing_controllers_1.JsonController()
 ], StudentController);

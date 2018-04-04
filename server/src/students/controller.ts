@@ -13,8 +13,6 @@ export default class StudentController {
     ) {
       const batch = await Batch.findOneById(student.batch_id.batch_id)
       if (!batch) throw new NotFoundError(`Batch with id ${student.batch_id.batch_id} does not exist!`)
-      console.log(batch)
-      console.log(student)
       student.batch = batch
       const entity =  await Student.create(student)
       return entity.save()
