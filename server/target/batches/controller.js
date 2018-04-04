@@ -22,6 +22,9 @@ let BatchController = class BatchController {
     getBatches() {
         return entity_1.Batch.find();
     }
+    getBatch(id) {
+        return entity_1.Batch.findOneById(id);
+    }
 };
 __decorate([
     routing_controllers_1.Authorized(),
@@ -38,6 +41,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], BatchController.prototype, "getBatches", null);
+__decorate([
+    routing_controllers_1.Authorized(),
+    routing_controllers_1.Get('/batches/:id([0-9]+)'),
+    __param(0, routing_controllers_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], BatchController.prototype, "getBatch", null);
 BatchController = __decorate([
     routing_controllers_1.JsonController()
 ], BatchController);

@@ -1,9 +1,13 @@
-import {FETCH_BATCHES} from '../actions/batches'
+import {FETCH_BATCHES, FETCH_BATCH, CREATE_BATCH} from '../actions/batches'
 
 export default function (state = [], {type, payload}) {
 	switch (type) {
 		case FETCH_BATCHES:
 			return payload
+    case FETCH_BATCH:
+      return payload
+    case CREATE_BATCH:
+      return payload
 		default:
       return state
 	}

@@ -1,4 +1,4 @@
-import { JsonController, Post, Body, BadRequestError, Authorized, Get } from 'routing-controllers'
+import { JsonController, Post, Body, BadRequestError, Authorized, Get, Param } from 'routing-controllers'
 import { IsString } from 'class-validator'
 import {Batch} from './entity'
 
@@ -18,5 +18,13 @@ export default class BatchController {
   @Get('/batches')
   getBatches() {
     return Batch.find()
+  }
+
+  @Authorized()
+  @Get('/batches/:id([0-9]+)')
+  getBatch(
+    @Param('id') id: number
+  ) {
+    return Batch.findOneById(id)
   }
 }

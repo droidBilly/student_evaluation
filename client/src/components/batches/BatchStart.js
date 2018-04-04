@@ -10,10 +10,9 @@ import BatchList from './BatchList'
 
 class BatchStart extends PureComponent {
 
-
   render() {
 		return (
-      <Paper class="outer-paper">
+      <Paper className="outer-paper">
   			<div>
           <Card>
             <CardContent>

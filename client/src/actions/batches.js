@@ -3,6 +3,7 @@ import {baseUrl} from '../constants'
 
 export const FETCH_BATCHES = 'FETCH_BATCHES'
 export const CREATE_BATCH = 'CREATE_BATCH'
+export const FETCH_BATCH = 'FETCH_BATCH'
 
 export const fetchBatches = () => (dispatch, getState) => {
   const state = getState()
@@ -30,6 +31,22 @@ export const fetchBatches = () => (dispatch, getState) => {
       .then(result => {
         dispatch({
           type: CREATE_BATCH,
+          payload: result.body
+        })
+      })
+      .catch(err => console.error(err))
+  }
+
+  export const fetchBatch = (batchId) => (dispatch, getState) => {
+    const state = getState()
+    const jwt = state.currentUser.jwt
+
+    request
+      .get(`${baseUrl}/batches/${batchId}`)
+      .set('Authorization', `Bearer ${jwt}`)
+      .then(result => {
+        dispatch({
+          type: FETCH_BATCH,
           payload: result.body
         })
       })

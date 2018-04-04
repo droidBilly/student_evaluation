@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {Redirect, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {fetchBatches} from '../../actions/batches'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
@@ -17,15 +17,19 @@ class BatchList extends PureComponent {
       return (<Card key={batch.id} className="batch-card">
         <CardContent>
           <Typography variant="headline" component="h2">
-            { batch.name }
+            <Link to={`/batches/${batch.id}`}>
+              { batch.name }
+            </Link>
           </Typography>
           <Typography color="textSecondary">
-            Status: {batch.students}
+            Students: {batch.students.lenght} <br />
+            Start: {batch.start_date}<br />
+            End: {batch.end_date}
           </Typography>
         </CardContent>
         <CardActions>
           <Button size="small">
-            <Link className="link" to='/batches/'>Start evaluating</Link>
+            <Link to={`/batches/${batch.id}`}>Start evaluating</Link>
           </Button>
         </CardActions>
       </Card>)
@@ -34,7 +38,7 @@ class BatchList extends PureComponent {
   render() {
     if (this.props.batches === []) return 'No batches so far';
 		return (
-      <Paper class="outer-paper">
+      <Paper className="outer-paper">
   			<div>
           {this.props.batches.map(batch => this.renderBatch(batch))}
   			</div>
