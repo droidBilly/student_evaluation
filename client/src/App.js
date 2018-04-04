@@ -8,6 +8,7 @@ import LogoutPage from './components/logout/LogoutPage'
 import IndexPage from './components/index/IndexPage'
 import BatchForm from './components/batches/BatchForm'
 import BatchDetails from './components/batches/BatchDetails'
+import StudentForm from './components/students/StudentForm'
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
             <Route exact path="/index" component={IndexPage} />
             <Route exact path="/batches/new" component={BatchForm} />
              <Route exact path="/batches/:id" component={BatchDetails} />
+             <Route exact path="/students/new" component={StudentForm} />
             <Route exact path="/" render={ () => <Redirect to="/index" /> } />
           </div>
       </Router>

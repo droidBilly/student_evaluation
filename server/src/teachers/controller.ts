@@ -6,7 +6,7 @@ export default class TeacherController {
 
 
   @Post('/teachers')
-  async signup(
+  async addTeacher(
     @CurrentUser() teacher: Teacher,
     @Body() new_teacher: Teacher
   ) {

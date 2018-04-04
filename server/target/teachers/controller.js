@@ -24,7 +24,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
 let TeacherController = class TeacherController {
-    async signup(teacher, new_teacher) {
+    async addTeacher(teacher, new_teacher) {
         if (teacher.role === 'SUPER_ADMIN') {
             const { password } = new_teacher, rest = __rest(new_teacher, ["password"]);
             const entity = entity_1.default.create(rest);
@@ -52,7 +52,7 @@ __decorate([
     __metadata("design:paramtypes", [entity_1.default,
         entity_1.default]),
     __metadata("design:returntype", Promise)
-], TeacherController.prototype, "signup", null);
+], TeacherController.prototype, "addTeacher", null);
 __decorate([
     routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/teacher'),

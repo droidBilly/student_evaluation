@@ -6,6 +6,7 @@ import Teacher from './teachers/entity'
 import TeachersController from './teachers/controller'
 import LoginController from './logins/controller'
 import BatchesController from './batches/controller'
+import StudentsController from './students/controller'
 import * as IO from 'socket.io'
 import * as socketIoJwtAuth from 'socketio-jwt-auth'
 import {secret} from './jwt'
@@ -23,7 +24,8 @@ useKoaServer(app, {
   controllers: [
     TeachersController,
     LoginController,
-    BatchesController
+    BatchesController,
+    StudentsController
   ],
   authorizationChecker: (action: Action) => {
    const header: string = action.request.headers.authorization

@@ -1,13 +1,13 @@
 import { JsonController, Post, Body, BadRequestError, Authorized, Get, Param } from 'routing-controllers'
 import { IsString } from 'class-validator'
-import {Batch} from './entity'
+import { Batch } from './entity'
 
 @JsonController()
 export default class BatchController {
 
   @Authorized()
   @Post('/batches')
-    async signup(
+    async createBatch(
       @Body() batch: Batch
     ) {
       const entity = Batch.create(batch)

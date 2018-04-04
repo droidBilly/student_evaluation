@@ -14,43 +14,49 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
-let BatchController = class BatchController {
-    async createBatch(batch) {
-        const entity = entity_1.Batch.create(batch);
+const entity_2 = require("../batches/entity");
+let StudentController = class StudentController {
+    async addStudent(student) {
+        const batch = await entity_2.Batch.findOneById(student.batch_id.batch_id);
+        if (!batch)
+            throw new routing_controllers_1.NotFoundError(`Batch with id ${student.batch_id.batch_id} does not exist!`);
+        console.log(batch);
+        console.log(student);
+        student.batch = batch;
+        const entity = await entity_1.Student.create(student);
         return entity.save();
     }
-    getBatches() {
-        return entity_1.Batch.find();
+    getStudents() {
+        return entity_1.Student.find();
     }
-    getBatch(id) {
-        return entity_1.Batch.findOneById(id);
+    getStudent(id) {
+        return entity_1.Student.findOneById(id);
     }
 };
 __decorate([
-    routing_controllers_1.Authorized(),
-    routing_controllers_1.Post('/batches'),
+    routing_controllers_1.Post('/students'),
     __param(0, routing_controllers_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [entity_1.Batch]),
+    __metadata("design:paramtypes", [entity_1.Student]),
     __metadata("design:returntype", Promise)
-], BatchController.prototype, "createBatch", null);
+], StudentController.prototype, "addStudent", null);
 __decorate([
     routing_controllers_1.Authorized(),
-    routing_controllers_1.Get('/batches'),
+    routing_controllers_1.Get('/students'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], BatchController.prototype, "getBatches", null);
+], StudentController.prototype, "getStudents", null);
 __decorate([
     routing_controllers_1.Authorized(),
-    routing_controllers_1.Get('/batches/:id([0-9]+)'),
+    routing_controllers_1.Get('/students/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], BatchController.prototype, "getBatch", null);
-BatchController = __decorate([
+], StudentController.prototype, "getStudent", null);
+StudentController = __decorate([
     routing_controllers_1.JsonController()
-], BatchController);
-exports.default = BatchController;
+], StudentController);
+exports.default = StudentController;
 //# sourceMappingURL=controller.js.map

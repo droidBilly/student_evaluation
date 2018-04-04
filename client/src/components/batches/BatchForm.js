@@ -28,6 +28,13 @@ export class BatchForm extends PureComponent {
 					} onChange={ this.handleChange } />
 				</div>
 
+        <div>
+          <label htmlFor="name">Name</label>
+          <input type="name" name="name" id="name" value={
+            this.state.name || ''
+          } onChange={ this.handleChange } />
+        </div>
+
 				<div>
 					<label htmlFor="start_date">Start date</label>
 					<input type="Date" name="start_date" id="start_date" value={
