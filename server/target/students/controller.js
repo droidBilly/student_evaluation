@@ -30,6 +30,15 @@ let StudentController = class StudentController {
     getStudent(id) {
         return entity_1.Student.findOneById(id);
     }
+    async deleteStudent(id) {
+        const student = await entity_1.Student.findOneById(id);
+        if (!student)
+            throw new routing_controllers_1.NotFoundError(`Student does not exist!`);
+        await student.remove();
+        return {
+            message: "You succesfully deleted the student"
+        };
+    }
 };
 __decorate([
     routing_controllers_1.Post('/students'),
@@ -53,6 +62,15 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "getStudent", null);
+__decorate([
+    routing_controllers_1.Authorized(),
+    routing_controllers_1.Delete('/students/:id([0-9]+)'),
+    routing_controllers_1.HttpCode(201),
+    __param(0, routing_controllers_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], StudentController.prototype, "deleteStudent", null);
 StudentController = __decorate([
     routing_controllers_1.JsonController()
 ], StudentController);

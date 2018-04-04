@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect, Link} from 'react-router-dom'
 import {fetchBatch} from '../../actions/batches'
+import {deleteStudent} from '../../actions/students'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
@@ -15,6 +16,10 @@ class BatchDetail extends PureComponent {
     this.props.fetchBatch(this.props.match.params.id)
   }
 
+  deleteStudent(studentId) {
+    this.props.deleteStudent(studentId)
+  }
+
   renderStudent = (student) => {
       if (student.evaluations[0] === undefined) student.evaluations[0] = {flag: 'grey'}
       return (<Card key={student.id} className="batch-card">
@@ -24,14 +29,19 @@ class BatchDetail extends PureComponent {
               { student.first_name } {student.last_name}
             </Link>
           </Typography>
-          <img src={`${student.profile_pic}`} />
+          <Link to={`/students/${student.id}`}>
+            <img src={`${student.profile_pic}`} />
+          </Link>
           <Typography color="textSecondary">
             Last evaluation: {student.evaluations[0].flag}
           </Typography>
         </CardContent>
         <CardActions>
           <Button size="small">
-            <Link to={`/students/${student.id}`}>Student profile</Link>
+            <Link to={`/students/${student.id}`}>Edit Student</Link>
+          </Button>
+          <Button size="small" onClick={() => { if (window.confirm('Are you sure you wish to delete this student?')) this.deleteStudent(student.id) } }>
+            Delete Student
           </Button>
         </CardActions>
       </Card>)
@@ -69,4 +79,4 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps, {fetchBatch})(BatchDetail)
+export default connect(mapStateToProps, {fetchBatch, deleteStudent})(BatchDetail)

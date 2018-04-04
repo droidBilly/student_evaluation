@@ -1,4 +1,4 @@
-import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError } from 'routing-controllers'
+import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError, Delete, HttpCode } from 'routing-controllers'
 import { IsString } from 'class-validator'
 import { Student } from './entity'
 import { Batch } from '../batches/entity'
@@ -30,5 +30,20 @@ export default class StudentController {
     @Param('id') id: number
   ) {
     return Student.findOneById(id)
+  }
+
+  @Authorized()
+  @Delete('/students/:id([0-9]+)')
+  @HttpCode(201)
+  async deleteStudent(
+    @Param('id') id: number
+  ) {
+    const student = await Student.findOneById(id)
+    if (!student) throw new NotFoundError(`Student does not exist!`)
+    await student.remove()
+
+    return {
+      message: "You succesfully deleted the student"
+    }
   }
 }
