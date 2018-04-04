@@ -10,7 +10,22 @@ export const fetchStudents = () => (dispatch, getState) => {
   const jwt = state.currentUser.jwt
 
   request
-    .get(`${baseUrl}/batches`)
+    .get(`${baseUrl}/students`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .then(result => {
+      dispatch({
+        type: FETCH_STUDENTS,
+        payload: result.body
+      })
+    })
+}
+
+export const fetchStudent = (studentId) => (dispatch, getState) => {
+  const state = getState()
+  const jwt = state.currentUser.jwt
+
+  request
+    .get(`${baseUrl}/students/${studentId}`)
     .set('Authorization', `Bearer ${jwt}`)
     .then(result => {
       dispatch({
@@ -20,19 +35,19 @@ export const fetchStudents = () => (dispatch, getState) => {
     })
   }
 
-  export const createStudent = (first_name, last_name, profile_pic, batch_id) => (dispatch, getState) => {
-    const state = getState()
-    const jwt = state.currentUser.jwt
+export const createStudent = (first_name, last_name, profile_pic, batch_id) => (dispatch, getState) => {
+  const state = getState()
+  const jwt = state.currentUser.jwt
 
-    request
-      .post(`${baseUrl}/students`)
-      .set('Authorization', `Bearer ${jwt}`)
-      .send({first_name, last_name, profile_pic, batch_id})
-      .then(result => {
-        dispatch({
-          type: CREATE_STUDENT,
-          payload: result.body
-        })
+  request
+    .post(`${baseUrl}/students`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .send({first_name, last_name, profile_pic, batch_id})
+    .then(result => {
+      dispatch({
+        type: CREATE_STUDENT,
+        payload: result.body
       })
-      .catch(err => console.error(err))
-  }
+    })
+    .catch(err => console.error(err))
+}
