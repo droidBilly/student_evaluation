@@ -33,8 +33,29 @@ let BatchController = class BatchController {
         });
         return batchesArray;
     }
-    getBatch(id) {
-        return entity_1.Batch.findOneById(id);
+    async getBatch(id) {
+        const batch = await entity_1.Batch.findOneById(id);
+        batch.students.map(student => {
+            if (student.evaluations[student.evaluations.length - 1] === undefined)
+                student.evaluations = 'grey';
+            else
+                student.evaluations = student.evaluations[student.evaluations.length - 1].flag;
+        });
+        return {
+            id: batch.id,
+            name: batch.name,
+            start_date: batch.start_date,
+            end_date: batch.end_date,
+            students: batch.students.map(student => {
+                return {
+                    first_name: student.first_name,
+                    last_name: student.last_name,
+                    id: student.id,
+                    profile_pic: student.profile_pic,
+                    evaluations: student.evaluations
+                };
+            })
+        };
     }
 };
 __decorate([
@@ -56,7 +77,7 @@ __decorate([
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], BatchController.prototype, "getBatch", null);
 BatchController = __decorate([
     routing_controllers_1.JsonController()

@@ -33,7 +33,7 @@ class BatchDetail extends PureComponent {
             <img src={`${student.profile_pic}`} />
           </Link>
           <Typography color="textSecondary">
-            Last evaluation: {student.evaluations[0].flag}
+            Last evaluation: {student.evaluations}
           </Typography>
         </CardContent>
         <CardActions>

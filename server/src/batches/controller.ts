@@ -18,7 +18,7 @@ export default class BatchController {
   @Get('/batches')
   async getBatches() {
     const batches = await Batch.find()
-    batches.sort(function(a, b){return a.id - b.id})
+    batches.sort(function(a, b){return a.id! - b.id!})
     const batchesArray = batches.map(batch => {
       return {
         start_date: batch.start_date,
@@ -33,9 +33,30 @@ export default class BatchController {
 
   // @Authorized()
   @Get('/batches/:id([0-9]+)')
-  getBatch(
+  async getBatch(
     @Param('id') id: number
   ) {
-    return Batch.findOneById(id)
+    const batch = await Batch.findOneById(id)
+    batch!.students.map(student => {
+      if(student.evaluations[student.evaluations.length-1] === undefined)
+        student.evaluations = 'grey'
+      else
+        student.evaluations = student.evaluations[student.evaluations.length-1].flag
+    })
+    return {
+      id: batch.id,
+      name: batch.name,
+      start_date: batch.start_date,
+      end_date: batch.end_date,
+      students: batch.students.map(student => {
+        return {
+          first_name: student.first_name,
+          last_name: student.last_name,
+          id: student.id,
+          profile_pic: student.profile_pic,
+          evaluations: student.evaluations
+        }
+      })
+    }
   }
 }

@@ -48,14 +48,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "addStudent", null);
 __decorate([
-    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/students'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "getStudents", null);
 __decorate([
-    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/students/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
