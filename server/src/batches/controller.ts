@@ -14,13 +14,24 @@ export default class BatchController {
       return entity.save()
     }
 
-  @Authorized()
+  // @Authorized()
   @Get('/batches')
-  getBatches() {
-    return Batch.find()
+  async getBatches() {
+    const batches = await Batch.find()
+    batches.sort(function(a, b){return a.id - b.id})
+    const batchesArray = batches.map(batch => {
+      return {
+        start_date: batch.start_date,
+        end_date: batch.end_date,
+        id: batch.id,
+        name: batch.name,
+        students: batch.students.length
+      }
+    })
+    return batchesArray
   }
 
-  @Authorized()
+  // @Authorized()
   @Get('/batches/:id([0-9]+)')
   getBatch(
     @Param('id') id: number

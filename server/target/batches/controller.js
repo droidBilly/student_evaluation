@@ -19,8 +19,19 @@ let BatchController = class BatchController {
         const entity = entity_1.Batch.create(batch);
         return entity.save();
     }
-    getBatches() {
-        return entity_1.Batch.find();
+    async getBatches() {
+        const batches = await entity_1.Batch.find();
+        batches.sort(function (a, b) { return a.id - b.id; });
+        const batchesArray = batches.map(batch => {
+            return {
+                start_date: batch.start_date,
+                end_date: batch.end_date,
+                id: batch.id,
+                name: batch.name,
+                students: batch.students.length
+            };
+        });
+        return batchesArray;
     }
     getBatch(id) {
         return entity_1.Batch.findOneById(id);
@@ -35,14 +46,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BatchController.prototype, "createBatch", null);
 __decorate([
-    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/batches'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], BatchController.prototype, "getBatches", null);
 __decorate([
-    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/batches/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),

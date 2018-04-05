@@ -1,4 +1,5 @@
 import {FETCH_STUDENTS, FETCH_STUDENT, CREATE_STUDENT} from '../actions/students'
+import {CREATE_EVALUATION} from '../actions/evaluations'
 
 export default function (state = [], {type, payload}) {
 	switch (type) {
@@ -8,7 +9,12 @@ export default function (state = [], {type, payload}) {
       return payload
     case CREATE_STUDENT:
       return payload
+    case CREATE_EVALUATION:
+      return {...state, payload}
 		default:
       return state
 	}
 }
+
+
+//      return {...state, evaluations:{...payload}}

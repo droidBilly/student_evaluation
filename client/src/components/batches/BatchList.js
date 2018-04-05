@@ -22,7 +22,7 @@ class BatchList extends PureComponent {
             </Link>
           </Typography>
           <Typography color="textSecondary">
-            Students: {batch.students.lenght} <br />
+            Students: {batch.students} <br />
             Start: {batch.start_date}<br />
             End: {batch.end_date}
           </Typography>
