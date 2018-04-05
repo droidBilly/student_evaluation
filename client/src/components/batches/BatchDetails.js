@@ -31,7 +31,7 @@ class BatchDetail extends PureComponent {
             </Link>
           </Typography>
           <Link to={`/students/${student.id}`}>
-            <img src={`${student.profile_pic}`} />
+            <img className ="profilePicture" src={`${student.profile_pic}`} />
           </Link>
           <Typography color="textSecondary">
             Last evaluation: {student.evaluations}
