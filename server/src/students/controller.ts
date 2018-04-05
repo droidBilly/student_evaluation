@@ -1,4 +1,4 @@
-import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError, Delete, HttpCode } from 'routing-controllers'
+import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError, Delete, HttpCode, Patch } from 'routing-controllers'
 import { IsString } from 'class-validator'
 import { Student } from './entity'
 import { Batch } from '../batches/entity'
@@ -30,6 +30,16 @@ export default class StudentController {
     @Param('id') id: number
   ) {
     return Student.findOneById(id)
+  }
+
+  @Patch('/students/:id([0-9]+)')
+  async updateStudent(
+    @Param('id') studentId: number,
+    @Body() update: Student
+  ) {
+    const student = await Student.findOneById(studentId)
+    if (!student) throw new NotFoundError('Student does not exist!')
+    return await Student.merge(student, update).save()
   }
 
   @Authorized()

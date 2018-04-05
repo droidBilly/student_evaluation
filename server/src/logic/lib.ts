@@ -1,7 +1,7 @@
 export function returnBatchPercentages(batch) {
   let grey = 0; let red = 0; let yellow = 0; let green = 0;
   batch.students.map(student => {
-    const last_evaluation = student.evaluations[student.evaluations.length-1]
+    const last_evaluation = student.evaluations.slice(-1)[0]
     if (last_evaluation === undefined) grey +=1
     else {
       switch(last_evaluation.flag) {
@@ -25,9 +25,9 @@ export function returnBatchPercentages(batch) {
 
 export function returnLastFlagColor(students) {
   return students.map(student => {
-    if(student.evaluations[student.evaluations.length-1] === undefined)
+    if(student.evaluations.slice(-1)[0] === undefined)
       student.evaluations = 'grey'
     else
-      student.evaluations = student.evaluations[student.evaluations.length-1].flag
+      student.evaluations = student.evaluations.slice(-1)[0].flag
   })
 }
