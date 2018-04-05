@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
 import { createBatch } from '../../actions/batches'
 
 export class BatchForm extends PureComponent {
@@ -7,7 +6,7 @@ export class BatchForm extends PureComponent {
 
 	handleSubmit = (e) => {
 		e.preventDefault()
-		this.props.createBatch(this.state.name, this.state.start_date, this.state.end_date)
+		this.props.onSubmit(this.state)
 	}
 
 	handleChange = (event) => {
@@ -22,18 +21,11 @@ export class BatchForm extends PureComponent {
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<div>
-					<label htmlFor="name">Name</label>
+					<label htmlFor="name">Number</label>
 					<input type="name" name="name" id="name" value={
 						this.state.name || ''
 					} onChange={ this.handleChange } />
 				</div>
-
-        <div>
-          <label htmlFor="name">Name</label>
-          <input type="name" name="name" id="name" value={
-            this.state.name || ''
-          } onChange={ this.handleChange } />
-        </div>
 
 				<div>
 					<label htmlFor="start_date">Start date</label>
@@ -55,4 +47,4 @@ export class BatchForm extends PureComponent {
 	}
 }
 
-export default connect(null, {createBatch})(BatchForm)
+export default BatchForm

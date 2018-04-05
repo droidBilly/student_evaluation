@@ -8,6 +8,7 @@ import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom'
 
 const styles = {
   root: {
@@ -29,11 +30,8 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
           <Typography variant="title" color="inherit" className={classes.flex}>
-            Student Evaluations
+            <Link to="/">Student Evaluations</Link>
           </Typography>
           {
             location.pathname.indexOf('teachers') > 0 &&

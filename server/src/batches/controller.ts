@@ -6,7 +6,7 @@ import {returnLastFlagColor, returnBatchPercentages} from '../logic/lib'
 @JsonController()
 export default class BatchController {
 
-  @Authorized()
+  // @Authorized() /TODO: activate Authorized again!
   @Post('/batches')
     async createBatch(
       @Body() batch: Batch

@@ -7,7 +7,7 @@ export default function (state = [], {type, payload}) {
     case FETCH_BATCH:
       return payload
     case CREATE_BATCH:
-      return payload
+      return [...state,payload]
 		default:
       return state
 	}

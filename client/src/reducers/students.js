@@ -8,9 +8,9 @@ export default function (state = [], {type, payload}) {
     case FETCH_STUDENT:
       return payload
     case CREATE_STUDENT:
-      return payload
+      return [...state, payload]
     case CREATE_EVALUATION:
-      return {...state, payload}
+      return [...state, payload]
 		default:
       return state
 	}

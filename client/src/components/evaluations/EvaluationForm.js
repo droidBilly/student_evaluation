@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
 import { createEvaluation } from '../../actions/evaluations'
 import Button from 'material-ui/Button'
 

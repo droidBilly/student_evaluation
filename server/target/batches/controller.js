@@ -42,7 +42,6 @@ let BatchController = class BatchController {
     }
 };
 __decorate([
-    routing_controllers_1.Authorized(),
     routing_controllers_1.Post('/batches'),
     __param(0, routing_controllers_1.Body()),
     __metadata("design:type", Function),

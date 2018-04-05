@@ -9,6 +9,7 @@ import Button from 'material-ui/Button'
 import EvaluationForm from '../evaluations/EvaluationForm'
 import StudentForm from './StudentForm'
 import {createEvaluation} from '../../actions/evaluations'
+import {fetchUser} from '../../actions/users'
 
 class StudentDetail extends PureComponent {
   state = {
@@ -23,6 +24,7 @@ class StudentDetail extends PureComponent {
 
   componentWillMount() {
     this.props.fetchStudent(this.props.match.params.id)
+    this.props.fetchUser()
   }
 
   updateStudent = (student) => {
@@ -40,7 +42,7 @@ class StudentDetail extends PureComponent {
       evaluation.flag,
       evaluation.remark,
       evaluation.date,
-      {teacher_id: 1}, //TODO: get from teacher
+      this.props.currentUser.id,
       this.props.student.id
     )
   }
@@ -56,6 +58,12 @@ class StudentDetail extends PureComponent {
             Date:{ evaluation.date }
           </Typography>
         </CardContent>
+
+        <CardActions>
+          <Button size="small">
+            <Link className="link" to={`/batches/`}>Edit Evaluation</Link>
+          </Button>
+        </CardActions>
       </Card>)
     }
 
@@ -67,10 +75,8 @@ class StudentDetail extends PureComponent {
 			<div>
         <Card>
           <CardContent>
-            <img src={`${student.profile_pic}`} />
+            <img className="profilePicture" src={`${student.profile_pic}`} />
 			      <h1>{student.first_name} {student.last_name}</h1>
-            <p>Evaluations: {evaluations.map(evaluation => this.renderEvaluation(evaluation))}</p>
-            <br />
             { this.state.edit && <StudentForm initialValues={student} onSubmit={this.updateStudent} />}
             <Button size="medium" onClick={this.toggleEdit}>
               Edit Student
@@ -78,6 +84,9 @@ class StudentDetail extends PureComponent {
             <Button size="medium" onClick={() => { if (window.confirm('Are you sure you wish to delete this student?')) this.deleteStudent(student.id) } }>
               Delete Student
             </Button>
+            <br />
+            <p>Evaluations: {evaluations.map(evaluation => this.renderEvaluation(evaluation))}</p>
+            <br />
             <EvaluationForm onSubmit={this.createEvaluation} />
           </CardContent>
         </Card>
@@ -88,8 +97,9 @@ class StudentDetail extends PureComponent {
 
 const mapStateToProps = function (state) {
 	return {
-		student: state.students
+		student: state.students,
+    currentUser: state.currentUser
 	}
 }
 
-export default connect(mapStateToProps, {fetchStudent, updateStudent, createEvaluation})(StudentDetail)
+export default connect(mapStateToProps, {fetchStudent, fetchUser, updateStudent, createEvaluation})(StudentDetail)
