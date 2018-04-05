@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
+const lib_1 = require("../logic/lib");
 let BatchController = class BatchController {
     async createBatch(batch) {
         const entity = entity_1.Batch.create(batch);
@@ -35,27 +36,9 @@ let BatchController = class BatchController {
     }
     async getBatch(id) {
         const batch = await entity_1.Batch.findOneById(id);
-        batch.students.map(student => {
-            if (student.evaluations[student.evaluations.length - 1] === undefined)
-                student.evaluations = 'grey';
-            else
-                student.evaluations = student.evaluations[student.evaluations.length - 1].flag;
-        });
-        return {
-            id: batch.id,
-            name: batch.name,
-            start_date: batch.start_date,
-            end_date: batch.end_date,
-            students: batch.students.map(student => {
-                return {
-                    first_name: student.first_name,
-                    last_name: student.last_name,
-                    id: student.id,
-                    profile_pic: student.profile_pic,
-                    evaluations: student.evaluations
-                };
-            })
-        };
+        lib_1.returnBatchPercentages(batch);
+        lib_1.returnLastFlagColor(batch.students);
+        return batch;
     }
 };
 __decorate([

@@ -18,13 +18,13 @@ export default class StudentController {
       return entity.save()
     }
 
-  // @Authorized()
+  // @Authorized() /TODO: activate Authorized again!
   @Get('/students')
   getStudents() {
     return Student.find()
   }
 
-  // @Authorized()
+  // @Authorized() /TODO: activate Authorized again!
   @Get('/students/:id([0-9]+)')
   getStudent(
     @Param('id') id: number

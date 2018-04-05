@@ -1,6 +1,7 @@
 import { JsonController, Post, Body, BadRequestError, Authorized, Get, Param } from 'routing-controllers'
 import { IsString } from 'class-validator'
 import { Batch } from './entity'
+import {returnLastFlagColor, returnBatchPercentages} from '../logic/lib'
 
 @JsonController()
 export default class BatchController {
@@ -14,7 +15,7 @@ export default class BatchController {
       return entity.save()
     }
 
-  // @Authorized()
+  // @Authorized() //TODO: activate Authorized again!
   @Get('/batches')
   async getBatches() {
     const batches = await Batch.find()
@@ -31,32 +32,14 @@ export default class BatchController {
     return batchesArray
   }
 
-  // @Authorized()
+  // @Authorized() //TODO: activate Authorized again!
   @Get('/batches/:id([0-9]+)')
   async getBatch(
     @Param('id') id: number
   ) {
     const batch = await Batch.findOneById(id)
-    batch!.students.map(student => {
-      if(student.evaluations[student.evaluations.length-1] === undefined)
-        student.evaluations = 'grey'
-      else
-        student.evaluations = student.evaluations[student.evaluations.length-1].flag
-    })
-    return {
-      id: batch.id,
-      name: batch.name,
-      start_date: batch.start_date,
-      end_date: batch.end_date,
-      students: batch.students.map(student => {
-        return {
-          first_name: student.first_name,
-          last_name: student.last_name,
-          id: student.id,
-          profile_pic: student.profile_pic,
-          evaluations: student.evaluations
-        }
-      })
-    }
+    returnBatchPercentages(batch!)
+    returnLastFlagColor(batch!.students)
+    return batch
   }
 }
