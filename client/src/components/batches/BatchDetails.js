@@ -3,7 +3,7 @@ import './BatchDetails.css'
 import {connect} from 'react-redux'
 import {Redirect, Link} from 'react-router-dom'
 import {fetchBatch} from '../../actions/batches'
-import {deleteStudent} from '../../actions/students'
+import {deleteStudent, createStudent} from '../../actions/students'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
@@ -12,13 +12,32 @@ import BatchList from './BatchList'
 import StudentForm from '../students/StudentForm'
 
 class BatchDetail extends PureComponent {
+  state = {
+    edit: false
+  }
+
+  toggleEdit = () => {
+    this.setState({
+      edit: !this.state.edit
+    });
+  }
 
   componentWillMount() {
     this.props.fetchBatch(this.props.match.params.id)
   }
 
-  deleteStudent(studentId) {
+  deleteStudent = (studentId) => {
     this.props.deleteStudent(studentId)
+  }
+
+  createStudent = (student) => {
+    this.props.createStudent(
+      student.first_name,
+      student.last_name,
+      student.profile_pic,
+      this.props.batch.id
+    )
+    this.toggleEdit()
   }
 
   renderStudent = (student) => {
@@ -31,7 +50,7 @@ class BatchDetail extends PureComponent {
             </Link>
           </Typography>
           <Link to={`/students/${student.id}`}>
-            <img className ="profilePicture" src={`${student.profile_pic}`} />
+            <img className="profilePicture" src={`${student.profile_pic}`} />
           </Link>
           <Typography color="textSecondary">
             Last evaluation: {student.evaluations}
@@ -87,8 +106,9 @@ class BatchDetail extends PureComponent {
             <Button size="medium">
             <Link className="link" to="/batches/new">Edit Batch</Link>
             </Button>
-            <Button size="medium">
-            <Link to={`/students/new`}>Add Student</Link>
+            { this.state.edit && <StudentForm onSubmit={this.createStudent} />}
+            <Button size="medium" onClick={this.toggleEdit}>
+              Add Student
             </Button>
           </CardContent>
         </Card>
@@ -103,4 +123,4 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps, {fetchBatch, deleteStudent})(BatchDetail)
+export default connect(mapStateToProps, {fetchBatch, deleteStudent,createStudent})(BatchDetail)

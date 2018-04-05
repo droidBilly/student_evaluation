@@ -5,6 +5,7 @@ export const CREATE_STUDENT = 'CREATE_STUDENT'
 export const FETCH_STUDENT = 'FETCH_STUDENT'
 export const FETCH_STUDENTS = 'FETCH_STUDENTS'
 export const DELETE_STUDENT = 'DELETE_STUDENT'
+export const UPDATE_STUDENT = 'UPDATE_STUDENT'
 
 export const fetchStudents = () => (dispatch, getState) => {
   const state = getState()
@@ -47,6 +48,23 @@ export const createStudent = (first_name, last_name, profile_pic, batch_id) => (
     .then(result => {
       dispatch({
         type: CREATE_STUDENT,
+        payload: result.body
+      })
+    })
+    .catch(err => console.error(err))
+}
+
+export const updateStudent = (studentId, first_name, last_name, profile_pic) => (dispatch, getState) => {
+  const state = getState()
+  const jwt = state.currentUser.jwt
+
+  request
+    .patch(`${baseUrl}/students/${studentId}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .send({first_name, last_name, profile_pic})
+    .then(result => {
+      dispatch({
+        type: UPDATE_STUDENT,
         payload: result.body
       })
     })

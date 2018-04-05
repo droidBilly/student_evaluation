@@ -25,8 +25,9 @@ const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
 const entity_2 = require("../batches/entity");
 let StudentController = class StudentController {
-    async addStudent(student) {
-        const batch = await entity_2.Batch.findOneById(student.batch_id.batch_id);
+    async addStudent(student, batch_id) {
+        console.log(batch_id.batch_id);
+        const batch = await entity_2.Batch.findOneById(batch_id.batch_id);
         if (!batch)
             throw new routing_controllers_1.NotFoundError(`Batch with id ${student.batch_id.batch_id} does not exist!`);
         student.batch = batch;
@@ -75,8 +76,9 @@ let StudentController = class StudentController {
 __decorate([
     routing_controllers_1.Post('/students'),
     __param(0, routing_controllers_1.Body()),
+    __param(1, routing_controllers_1.Body('batch_id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [entity_1.Student]),
+    __metadata("design:paramtypes", [entity_1.Student, Object]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "addStudent", null);
 __decorate([
@@ -93,11 +95,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getStudent", null);
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Patch('/students/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __param(1, routing_controllers_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, entity_1.Student]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "updateStudent", null);
 __decorate([

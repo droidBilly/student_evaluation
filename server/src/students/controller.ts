@@ -9,9 +9,11 @@ export default class StudentController {
   // @Authorized()
   @Post('/students')
     async addStudent(
-      @Body() student: Student
+      @Body() student: Student,
+      @Body('batch_id') batch_id
     ) {
-      const batch = await Batch.findOneById(student.batch_id.batch_id)
+      console.log(batch_id.batch_id)
+      const batch = await Batch.findOneById(batch_id.batch_id)
       if (!batch) throw new NotFoundError(`Batch with id ${student.batch_id.batch_id} does not exist!`)
       student.batch = batch
       const entity =  await Student.create(student)
@@ -44,11 +46,11 @@ export default class StudentController {
     return student
   }
 
-  // @Authorized() /TODO: activate Authorized again!
+  @Authorized()
   @Patch('/students/:id([0-9]+)')
   async updateStudent(
     @Param('id') studentId: number,
-    @Body() update: Student
+    @Body() update: Partial<Student>
   ) {
     const student = await Student.findOneById(studentId)
     if (!student) throw new NotFoundError('Student does not exist!')
