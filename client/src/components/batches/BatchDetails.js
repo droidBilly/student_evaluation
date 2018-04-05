@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react'
+import './BatchDetails.css'
 import {connect} from 'react-redux'
 import {Redirect, Link} from 'react-router-dom'
 import {fetchBatch} from '../../actions/batches'
@@ -50,7 +51,24 @@ class BatchDetail extends PureComponent {
 
   render() {
     const batch = this.props.batch || []
-    const students = this.props.batch.students || []
+    const students = batch.students || []
+    const status_bar = batch.status_bar || [{red: 0, yellow: 0, green: 0, grey: 0}]
+    var redStyle = {
+      width: status_bar.red + '%',
+      backgroundColor: 'red'
+    }
+    var yellowStyle = {
+      width: status_bar.yellow + '%',
+      backgroundColor: 'yellow'
+    }
+    var greenStyle = {
+      width: status_bar.green + '%',
+      backgroundColor: 'green'
+    }
+    var greyStyle = {
+      width: status_bar.grey + '%',
+      backgroundColor: 'grey'
+    }
 		return (
 			<div>
         <Card>
@@ -58,6 +76,12 @@ class BatchDetail extends PureComponent {
 			      <h1>{batch.name}</h1>
             <p>Start date: {batch.start_date}</p>
             <p>End date: {batch.end_date}</p>
+            <div className="progress">
+              <div style={redStyle}>{Math.round(status_bar.red)} %</div>
+              <div style={yellowStyle}>{Math.round(status_bar.yellow)} %</div>
+              <div style={greenStyle}>{Math.round(status_bar.green)} %</div>
+              <div style={greyStyle}>{Math.round(status_bar.grey)} %</div>
+            </div>
             <p>Students: {students.map(student => this.renderStudent(student))}</p>
             <br />
             <Button size="medium">

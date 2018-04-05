@@ -1,0 +1,10 @@
+.progress {
+  display: inline-block;
+  width: 100%;
+
+}
+
+.progress > div {
+  display: inline-block;
+  text-align: center;
+}
