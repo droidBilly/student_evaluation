@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
 import EvaluationForm from '../evaluations/EvaluationForm'
 import StudentForm from './StudentForm'
+import {createEvaluation} from '../../actions/evaluations'
 
 class StudentDetail extends PureComponent {
   state = {
@@ -25,8 +26,6 @@ class StudentDetail extends PureComponent {
   }
 
   updateStudent = (student) => {
-    console.log(this.props.match.params.id)
-    console.log(student)
     this.props.updateStudent(
       this.props.match.params.id,
       student.first_name,
@@ -34,6 +33,16 @@ class StudentDetail extends PureComponent {
       student.profile_pic
     )
     this.toggleEdit()
+  }
+
+  createEvaluation = (evaluation) => {
+    this.props.createEvaluation(
+      evaluation.flag,
+      evaluation.remark,
+      evaluation.date,
+      {teacher_id: 1}, //TODO: get from teacher
+      this.props.student.id
+    )
   }
 
   renderEvaluation = (evaluation) => {
@@ -69,7 +78,7 @@ class StudentDetail extends PureComponent {
             <Button size="medium" onClick={() => { if (window.confirm('Are you sure you wish to delete this student?')) this.deleteStudent(student.id) } }>
               Delete Student
             </Button>
-            <EvaluationForm />
+            <EvaluationForm onSubmit={this.createEvaluation} />
           </CardContent>
         </Card>
 			</div>
@@ -83,4 +92,4 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps, {fetchStudent, updateStudent})(StudentDetail)
+export default connect(mapStateToProps, {fetchStudent, updateStudent, createEvaluation})(StudentDetail)

@@ -10,9 +10,11 @@ export default class StudentController {
   @Post('/evaluations')
   async addStudent(
     @Body() evaluation: Evaluation
+    @Body('student_id') student_id
+    @Body('teacher_id') teacher_id
   ) {
     const teacher = await Teacher.findOneById(evaluation.teacher_id.teacher_id)
-    const student = await Student.findOneById(evaluation.student_id.student_id)
+    const student = await Student.findOneById(student_id.student_id)
     if (!teacher) throw new NotFoundError(`Teacher with id ${evaluation.teacher_id.teacher_id} does not exist!`)
     if (!student) throw new NotFoundError(`Student with id ${evaluation.student_id.student_id} does not exist!`)
     evaluation.teacher = teacher

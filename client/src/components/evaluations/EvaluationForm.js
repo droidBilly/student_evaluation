@@ -8,13 +8,7 @@ export class EvaluationForm extends PureComponent {
 
 	handleSubmit = (e) => {
 		e.preventDefault()
-		this.props.createEvaluation(
-      this.state.flag,
-      this.state.remark,
-      this.state.date,
-      {teacher_id: 1}, //TODO: get from teacher
-			{student_id: 13} //TODO: get from student
-    )
+		this.props.onSubmit(this.state)
 	}
 
 	handleChange = (event) => {
@@ -26,6 +20,8 @@ export class EvaluationForm extends PureComponent {
   }
 
 	render() {
+		const initialValues = this.props.initialValues || {}
+
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<div>
@@ -40,14 +36,14 @@ export class EvaluationForm extends PureComponent {
         <div>
           <label htmlFor="remark">Remark </label>
           <textarea type="text" name="remark" id="remark" value={
-            this.state.remark || ''
+            this.state.remark || initialValues.remark || ''
           } onChange={ this.handleChange } />
         </div>
 
 				<div>
 					<label htmlFor="date">Evaluation for day: </label>
 					<input type="date" name="date" id="date" value={
-						this.state.date || ''
+						this.state.date || initialValues.date || ''
 					} onChange={ this.handleChange } />
 				</div>
 
@@ -57,4 +53,4 @@ export class EvaluationForm extends PureComponent {
 	}
 }
 
-export default connect(null, {createEvaluation})(EvaluationForm)
+export default EvaluationForm

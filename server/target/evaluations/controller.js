@@ -26,9 +26,9 @@ const entity_1 = require("./entity");
 const entity_2 = require("../students/entity");
 const entity_3 = require("../teachers/entity");
 let StudentController = class StudentController {
-    async addStudent(evaluation) {
+    async addStudent(evaluation, student_id, teacher_id) {
         const teacher = await entity_3.default.findOneById(evaluation.teacher_id.teacher_id);
-        const student = await entity_2.Student.findOneById(evaluation.student_id.student_id);
+        const student = await entity_2.Student.findOneById(student_id.student_id);
         if (!teacher)
             throw new routing_controllers_1.NotFoundError(`Teacher with id ${evaluation.teacher_id.teacher_id} does not exist!`);
         if (!student)
@@ -64,8 +64,10 @@ let StudentController = class StudentController {
 __decorate([
     routing_controllers_1.Post('/evaluations'),
     __param(0, routing_controllers_1.Body()),
+    __param(1, routing_controllers_1.Body('student_id')),
+    __param(2, routing_controllers_1.Body('teacher_id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [entity_1.Evaluation]),
+    __metadata("design:paramtypes", [entity_1.Evaluation, Object, Object]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "addStudent", null);
 __decorate([
