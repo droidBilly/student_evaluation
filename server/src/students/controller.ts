@@ -20,18 +20,31 @@ export default class StudentController {
 
   // @Authorized() /TODO: activate Authorized again!
   @Get('/students')
-  getStudents() {
-    return Student.find()
+  async getStudents() {
+    const students = await Student.find()
+    students.map(student =>{
+      student.evaluations = student.evaluations.map(evaluation => {
+        const {teacher, ...evaluationData} = evaluation
+        return evaluationData
+      })
+    })
+    return students
   }
 
   // @Authorized() /TODO: activate Authorized again!
   @Get('/students/:id([0-9]+)')
-  getStudent(
+  async getStudent(
     @Param('id') id: number
   ) {
-    return Student.findOneById(id)
+    const student = await Student.findOneById(id)
+    student.evaluations = student.evaluations.map(evaluation => {
+      const {teacher, ...evaluationData} = evaluation
+       return evaluationData
+    })
+    return student
   }
 
+  // @Authorized() /TODO: activate Authorized again!
   @Patch('/students/:id([0-9]+)')
   async updateStudent(
     @Param('id') studentId: number,
@@ -39,7 +52,12 @@ export default class StudentController {
   ) {
     const student = await Student.findOneById(studentId)
     if (!student) throw new NotFoundError('Student does not exist!')
-    return await Student.merge(student, update).save()
+    const new_student = await Student.merge(student, update).save()
+    new_student.evaluations = new_student.evaluations.map(evaluation => {
+      const {teacher, ...evaluationData} = evaluation
+       return evaluationData
+    })
+    return new_student
   }
 
   @Authorized()

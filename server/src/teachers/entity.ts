@@ -37,7 +37,7 @@ export default class Teacher extends BaseEntity {
     return bcrypt.compare(rawPassword, this.password)
   }
 
-  @OneToMany(_ => Evaluation, evaluation => evaluation.student, {eager: true})
+  @OneToMany(_ => Evaluation, evaluation => evaluation.student)
   evaluations: Evaluation[]
 
 }

@@ -13,13 +13,19 @@ function returnBatchPercentages(batch) {
             switch (last_evaluation.flag) {
                 case 'red':
                     red += 1;
+                    break;
                 case 'yellow':
                     yellow += 1;
+                    break;
                 case 'green':
                     green += 1;
+                    break;
+                default:
+                    return null;
             }
         }
     });
+    console.log(grey, red, yellow, green);
     let sum = batch.students.length;
     return batch.status_bar = {
         grey: grey / sum * 100,

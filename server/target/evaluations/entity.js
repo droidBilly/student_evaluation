@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Evaluation.prototype, "date", void 0);
 __decorate([
-    typeorm_1.ManyToOne(_ => entity_2.default, teacher => teacher.evaluations),
+    typeorm_1.ManyToOne(_ => entity_2.default, teacher => teacher.evaluations, { eager: true }),
     __metadata("design:type", entity_2.default)
 ], Evaluation.prototype, "teacher", void 0);
 __decorate([

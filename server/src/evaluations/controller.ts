@@ -1,4 +1,4 @@
-import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError } from 'routing-controllers'
+import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError, CurrentUser, Patch, UnauthorizedError } from 'routing-controllers'
 import { Evaluation } from './entity'
 import { Student } from '../students/entity'
 import Teacher from '../teachers/entity'
@@ -6,7 +6,7 @@ import Teacher from '../teachers/entity'
 @JsonController()
 export default class StudentController {
 
-  // @Authorized()
+  // @Authorized() //TODO: activate Authorized
   @Post('/evaluations')
   async addStudent(
     @Body() evaluation: Evaluation
@@ -22,16 +22,38 @@ export default class StudentController {
   }
 
   @Authorized()
-  @Get('/evaluation')
-  getStudents() {
-    return Student.find()
+  @Patch('/evaluations/:id([0-9]+)')
+  async updateEvaluation(
+    @Param('id') evaluationId: number,
+    @CurrentUser() teacher: Teacher,
+    @Body() update: Evaluation
+  ) {
+    const evaluation = await Evaluation.findOneById(evaluationId)
+    if (!evaluation) throw new NotFoundError('Evaluation does not exist!')
+    if (evaluation.teacher.id !== teacher.id) throw new UnauthorizedError('You are not allowed to edit other teachers evaluation')
+    await Evaluation.merge(evaluation, update).save()
+    const {teacher, ...evaluationData} = evaluation
+    return evaluationData
   }
 
-  @Authorized()
-  @Get('/evaluation/:id([0-9]+)')
-  getEvaluation(
+  // @Authorized() //TODO: activate Authorized
+  @Get('/evaluations')
+  async getEvaluations() {
+    const evaluations = await Evaluation.find()
+    return evaluations.map(evaluation => {
+      const {teacher, ...evaluationData} = evaluation
+      return evaluationData
+    })
+
+  }
+
+  // @Authorized() //TODO: activate Authorized
+  @Get('/evaluations/:id([0-9]+)')
+  async getEvaluation(
     @Param('id') id: number
   ) {
-    return Evaluation.findOneById(id)
+    const evaluation = await Evaluation.findOneById(id)
+    const {teacher, ...evaluationData} = evaluation
+    return evaluationData
   }
 }

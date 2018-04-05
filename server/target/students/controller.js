@@ -11,6 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
@@ -24,17 +33,34 @@ let StudentController = class StudentController {
         const entity = await entity_1.Student.create(student);
         return entity.save();
     }
-    getStudents() {
-        return entity_1.Student.find();
+    async getStudents() {
+        const students = await entity_1.Student.find();
+        students.map(student => {
+            student.evaluations = student.evaluations.map(evaluation => {
+                const { teacher } = evaluation, evaluationData = __rest(evaluation, ["teacher"]);
+                return evaluationData;
+            });
+        });
+        return students;
     }
-    getStudent(id) {
-        return entity_1.Student.findOneById(id);
+    async getStudent(id) {
+        const student = await entity_1.Student.findOneById(id);
+        student.evaluations = student.evaluations.map(evaluation => {
+            const { teacher } = evaluation, evaluationData = __rest(evaluation, ["teacher"]);
+            return evaluationData;
+        });
+        return student;
     }
     async updateStudent(studentId, update) {
         const student = await entity_1.Student.findOneById(studentId);
         if (!student)
             throw new routing_controllers_1.NotFoundError('Student does not exist!');
-        return await entity_1.Student.merge(student, update).save();
+        const new_student = await entity_1.Student.merge(student, update).save();
+        new_student.evaluations = new_student.evaluations.map(evaluation => {
+            const { teacher } = evaluation, evaluationData = __rest(evaluation, ["teacher"]);
+            return evaluationData;
+        });
+        return new_student;
     }
     async deleteStudent(id) {
         const student = await entity_1.Student.findOneById(id);
@@ -57,14 +83,14 @@ __decorate([
     routing_controllers_1.Get('/students'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getStudents", null);
 __decorate([
     routing_controllers_1.Get('/students/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getStudent", null);
 __decorate([
     routing_controllers_1.Patch('/students/:id([0-9]+)'),

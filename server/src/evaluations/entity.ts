@@ -22,7 +22,7 @@ export class Evaluation extends BaseEntity {
   @Column('text', { nullable: true})
   date: Date
 
-  @ManyToOne(_ => Teacher, teacher => teacher.evaluations)
+  @ManyToOne(_ => Teacher, teacher => teacher.evaluations, {eager: true})
   teacher: Teacher
 
   @ManyToOne(_ => Student, student => student.evaluations)
