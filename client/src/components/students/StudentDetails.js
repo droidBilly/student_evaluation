@@ -29,7 +29,7 @@ class StudentDetail extends PureComponent {
 
   updateStudent = (student) => {
     this.props.updateStudent(
-      this.props.match.params.id,
+      this.props.match.params.studentId,
       student.first_name,
       student.last_name,
       student.profile_pic
