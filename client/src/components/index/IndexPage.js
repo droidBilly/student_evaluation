@@ -23,7 +23,7 @@ class IndexPage extends PureComponent {
 		return (
       <div>
 				<h1>Welcome</h1>
-        Welcome {this.props.currentUser.name}, you are logged in as {this.props.currentUser.role}
+        Welcome {this.props.teacher.name}, you are logged in as {this.props.teacher.role}
         <br />
         <BatchStart />
       </div>
@@ -33,7 +33,8 @@ class IndexPage extends PureComponent {
 
 const mapStateToProps = function (state) {
 	return {
-		currentUser: state.currentUser
+		currentUser: state.currentUser,
+    teacher: state.teacher
 	}
 }
 

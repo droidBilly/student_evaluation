@@ -36,11 +36,11 @@ class BatchList extends PureComponent {
     }
 
   render() {
-    if (this.props.batches === []) return 'No batches so far';
+    const batches = this.props.batches || 'No batches so far'
 		return (
       <Paper className="outer-paper">
   			<div>
-          {this.props.batches.map(batch => this.renderBatch(batch))}
+          { batches.map(batch => this.renderBatch(batch)) }
   			</div>
       </Paper>
 		)

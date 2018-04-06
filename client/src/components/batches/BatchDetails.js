@@ -131,7 +131,7 @@ class BatchDetail extends PureComponent {
 
 const mapStateToProps = function (state) {
 	return {
-		batch: state.batches
+		batch: state.batch
 	}
 }
 
