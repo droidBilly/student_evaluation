@@ -10,6 +10,11 @@ import EvaluationForm from '../evaluations/EvaluationForm'
 import StudentForm from './StudentForm'
 import {createEvaluation, updateEvaluation} from '../../actions/evaluations'
 import {fetchUser} from '../../actions/users'
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import ImageIcon from 'material-ui-icons/Image';
+import WorkIcon from 'material-ui-icons/Work';
+import BeachAccessIcon from 'material-ui-icons/BeachAccess';
 
 class StudentDetail extends PureComponent {
   state = {
@@ -58,23 +63,17 @@ class StudentDetail extends PureComponent {
   }
 
   renderEvaluation = (evaluation) => {
-      return (<Card key={evaluation.id} className="batch-card">
-        <CardContent>
-          <Typography variant="headline" component="h2">
+      return (
+        <ListItem>
+          <Avatar>
+            <ImageIcon />
             { evaluation.flag }
-          </Typography>
-          <Typography color="textSecondary">
-            Notice: {evaluation.remark} <br />
-            Date:{ evaluation.date }
-          </Typography>
-        </CardContent>
-
-        <CardActions>
+          </Avatar>
+          <ListItemText primary={evaluation.remark} secondary={ evaluation.date } />
           <Button size="small">
             <Link className="link" to={`/batches/${this.props.match.params.batchId}/students/${this.props.match.params.studentId}/evaluations/${evaluation.id}`}>Edit Evaluation</Link>
           </Button>
-        </CardActions>
-      </Card>)
+        </ListItem>)
     }
 
   render() {
@@ -101,7 +100,11 @@ class StudentDetail extends PureComponent {
               Delete Student
             </Button>
             <br />
-            <p>Evaluations: {evaluations.map(evaluation => this.renderEvaluation(evaluation))}</p>
+            <div className="evaluationList">
+              <List>
+                {evaluations.map(evaluation => this.renderEvaluation(evaluation))}
+              </List>
+            </div>
             <br />
              <EvaluationForm initialValues={this.initial_last_evaluation} onSubmit={this.savingMethod} />
           </CardContent>

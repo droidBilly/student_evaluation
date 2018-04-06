@@ -14,6 +14,31 @@ import StudentForm from '../students/StudentForm'
 import AddIcon from 'material-ui-icons/Add';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Tooltip from 'material-ui/Tooltip';
+import { withStyles } from 'material-ui/styles';
+
+import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
+import Subheader from 'material-ui/List/ListSubheader';
+import IconButton from 'material-ui/IconButton';
+import InfoIcon from 'material-ui-icons/Info';
+
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
+});
+
 
 class BatchDetail extends PureComponent {
   state = {
@@ -64,22 +89,14 @@ class BatchDetail extends PureComponent {
 
   renderStudent = (student) => {
       if (student.evaluations[0] === undefined) student.evaluations[0] = {flag: 'grey'}
-      return (<Card key={student.id} className="batch-card">
-        <CardContent>
-          <Typography variant="headline" component="h2">
-            <Link to={`/batches/${this.props.match.params.batchId}/students/${student.id}`}>
-              { student.first_name } {student.last_name}
-            </Link>
-          </Typography>
+      return (
+        <GridListTile key={student.id}>
           <Link to={`/batches/${this.props.match.params.batchId}/students/${student.id}`}>
             <img className="profilePicture" src={`${student.profile_pic}`} />
-          </Link>
-          <Typography color="textSecondary">
-            Last evaluation: {student.evaluations}
-          </Typography>
-        </CardContent>
-      </Card>)
-    }
+            </Link>
+            <GridListTileBar title={ student.first_name } subtitle={student.last_name} actionIcon={student.evaluations }/>
+        </GridListTile>
+      )}
 
 
   render() {
@@ -126,7 +143,14 @@ class BatchDetail extends PureComponent {
               <div style={greenStyle}>{Math.round(status_bar.green)} %</div>
               <div style={greyStyle}>{Math.round(status_bar.grey)} %</div>
             </div>
-            Students: {students.map(student => this.renderStudent(student))}
+            <div className="gridholder">
+            <GridList cellHeight={300}>
+              <GridListTile key="Subheader" cols={2} style={{ height: 'auto'}}>
+                <Subheader component="div">Students</Subheader>
+              </GridListTile>
+              {students.map(student => this.renderStudent(student))}
+           </GridList>
+           </div>
             <br />
             { this.state.edit && <StudentForm onSubmit={this.createStudent} />}
             <Tooltip id="tooltip-fab" title="Add Student">
