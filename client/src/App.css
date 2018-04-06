@@ -48,3 +48,45 @@ a {
   justify-content: center;
   width: 800px;
 }
+
+.red {
+	width: 100px;
+	height: 100px;
+
+  background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, red 0%, orange 100%, red 95%);
+	background-image: -webkit-radial-gradient(45px 45px, circle cover, red, orange);
+	background-image: radial-gradient(45px 45px 45deg, circle cover, red 0%, orange 100%, red 95%);
+
+	animation-name: spin;
+	animation-duration: 3s; /* 3 seconds */
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+.yellow {
+	width: 100px;
+	height: 100px;
+
+  background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
+	background-image: -webkit-radial-gradient(45px 45px, circle cover, yellow, orange);
+	background-image: radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
+
+	animation-name: spin;
+	animation-duration: 3s; /* 3 seconds */
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+.green {
+	width: 100px;
+	height: 100px;
+
+  background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, green 0%, green 100%, yellow 95%);
+	background-image: -webkit-radial-gradient(45px 45px, circle cover, green, orange);
+	background-image: radial-gradient(45px 45px 45deg, circle cover, green 0%, orange 100%, red 95%);
+
+	animation-name: spin;
+	animation-duration: 3s; /* 3 seconds */
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}

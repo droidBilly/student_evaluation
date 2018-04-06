@@ -66,8 +66,7 @@ class StudentDetail extends PureComponent {
       return (
         <ListItem>
           <Avatar>
-            <ImageIcon />
-            { evaluation.flag }
+            <div className={`${evaluation.flag}`}></div>
           </Avatar>
           <ListItemText primary={evaluation.remark} secondary={ evaluation.date } />
           <Button size="small">
