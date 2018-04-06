@@ -4,7 +4,7 @@ import Teacher from './entity';
 @JsonController()
 export default class TeacherController {
 
-
+  //@Authorized //TODO: activate
   @Post('/teachers')
   async addTeacher(
     @CurrentUser() teacher: Teacher,

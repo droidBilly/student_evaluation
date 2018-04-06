@@ -38,6 +38,7 @@ class StudentDetail extends PureComponent {
   }
 
   createEvaluation = (evaluation) => {
+    console.log(this.props.currentUser.id)
     this.props.createEvaluation(
       evaluation.flag,
       evaluation.remark,
@@ -98,7 +99,7 @@ class StudentDetail extends PureComponent {
 const mapStateToProps = function (state) {
 	return {
 		student: state.students,
-    currentUser: state.currentUser
+    currentUser: state.teacher
 	}
 }
 

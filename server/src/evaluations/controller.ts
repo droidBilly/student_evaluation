@@ -13,14 +13,15 @@ export default class StudentController {
     @Body('student_id') student_id
     @Body('teacher_id') teacher_id
   ) {
-    const teacher = await Teacher.findOneById(evaluation.teacher_id.teacher_id)
+    const teacher = await Teacher.findOneById(teacher_id.teacher_id)
     const student = await Student.findOneById(student_id.student_id)
-    if (!teacher) throw new NotFoundError(`Teacher with id ${evaluation.teacher_id.teacher_id} does not exist!`)
-    if (!student) throw new NotFoundError(`Student with id ${evaluation.student_id.student_id} does not exist!`)
+    if (!teacher) throw new NotFoundError(`Teacher with id ${teacher_id.teacher_id} does not exist!`)
+    if (!student) throw new NotFoundError(`Student with id ${student_id.student_id} does not exist!`)
     evaluation.teacher = teacher
     evaluation.student = student
     const entity =  await Evaluation.create(evaluation)
-    return entity.save()
+    await entity.save()
+    return student;
   }
 
   @Authorized()

@@ -1,5 +1,6 @@
 import * as request from 'superagent'
 import {baseUrl} from '../constants'
+import history from '../history'
 
 export const CREATE_EVALUATION = 'CREATE_EVALUATION'
 export const FETCH_EVALUATIONS = 'FETCH_EVALUATIONS'
@@ -32,6 +33,7 @@ export const createEvaluation = (flag, remark, date, teacher_id, student_id) => 
         type: CREATE_EVALUATION,
         payload: result.body
       })
+      history.go()
     })
     .catch(err => console.error(err))
 }

@@ -1,4 +1,4 @@
-import {USER_LOGIN_SUCCESS, USER_LOGOUT, FETCH_USER} from '../actions/users'
+import {USER_LOGIN_SUCCESS, USER_LOGOUT} from '../actions/users'
 import {localStorageJwtKey} from '../constants'
 
 let initialState = null
@@ -18,8 +18,6 @@ export default function (state = initialState, {type, payload}) {
 			return payload
     case USER_LOGOUT:
       return null
-    case FETCH_USER:
-      return payload
 		default:
       return state
 	}

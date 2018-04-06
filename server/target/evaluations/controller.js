@@ -27,16 +27,17 @@ const entity_2 = require("../students/entity");
 const entity_3 = require("../teachers/entity");
 let StudentController = class StudentController {
     async addStudent(evaluation, student_id, teacher_id) {
-        const teacher = await entity_3.default.findOneById(evaluation.teacher_id.teacher_id);
+        const teacher = await entity_3.default.findOneById(teacher_id.teacher_id);
         const student = await entity_2.Student.findOneById(student_id.student_id);
         if (!teacher)
-            throw new routing_controllers_1.NotFoundError(`Teacher with id ${evaluation.teacher_id.teacher_id} does not exist!`);
+            throw new routing_controllers_1.NotFoundError(`Teacher with id ${teacher_id.teacher_id} does not exist!`);
         if (!student)
-            throw new routing_controllers_1.NotFoundError(`Student with id ${evaluation.student_id.student_id} does not exist!`);
+            throw new routing_controllers_1.NotFoundError(`Student with id ${student_id.student_id} does not exist!`);
         evaluation.teacher = teacher;
         evaluation.student = student;
         const entity = await entity_1.Evaluation.create(evaluation);
-        return entity.save();
+        await entity.save();
+        return student;
     }
     async updateEvaluation(evaluationId, teacher, update) {
         const evaluation = await entity_1.Evaluation.findOneById(evaluationId);
