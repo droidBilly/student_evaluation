@@ -19,6 +19,7 @@ export default class StudentController {
     if (!student) throw new NotFoundError(`Student with id ${student_id.student_id} does not exist!`)
     evaluation.teacher = teacher
     evaluation.student = student
+    if (evaluation.date === undefined) evaluation.date = new Date().toJSON().slice(0,10)
     const entity =  await Evaluation.create(evaluation)
     await entity.save()
     return student;

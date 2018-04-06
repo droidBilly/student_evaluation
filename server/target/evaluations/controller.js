@@ -35,6 +35,8 @@ let StudentController = class StudentController {
             throw new routing_controllers_1.NotFoundError(`Student with id ${student_id.student_id} does not exist!`);
         evaluation.teacher = teacher;
         evaluation.student = student;
+        if (evaluation.date === undefined)
+            evaluation.date = new Date().toJSON().slice(0, 10);
         const entity = await entity_1.Evaluation.create(evaluation);
         await entity.save();
         return student;

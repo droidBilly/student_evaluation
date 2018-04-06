@@ -48,9 +48,14 @@ export class EvaluationForm extends PureComponent {
 					} onChange={ this.handleChange } />
 				</div>
 
-				<Button variant="raised" size="small" type="submit">
+				<Button variant="raised" size="small" type="submit" color="primary">
 					<Save />Save
 				</Button>
+				<span> </span>
+				<Button variant="raised" size="small" type="submit" color="secondary">
+					<Save />Save and next
+				</Button>
+
 			</form>
 		)
 	}
