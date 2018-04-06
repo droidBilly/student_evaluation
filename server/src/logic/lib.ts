@@ -19,7 +19,6 @@ export function returnBatchPercentages(batch) {
       }
     }
   })
-  console.log(grey,red,yellow,green)
   let sum=batch.students.length
   return batch.status_bar = {
     grey: grey/sum*100,
@@ -38,7 +37,7 @@ export function returnLastFlagColor(students) {
   })
 }
 
-export function returnFlagWithLikelihood() {
+function returnFlagWithLikelihood() {
   let flags = ['red','yellow','green'];
   let likelihood = [0.53, 0.28, 0.19];
   let random_num = Math.random() * (1 - 0);
@@ -51,4 +50,20 @@ export function returnFlagWithLikelihood() {
           return flags[i];
       }
   }
+}
+
+export function returnRandomStudentId(students) {
+  const color = returnFlagWithLikelihood()
+  console.log(color)
+  let hotpot = []
+  students.map(student => {
+    let last_evaluation = student.evaluations.slice(-1)[0]
+    if(last_evaluation === undefined) {
+      last_evaluation = {flag:'grey'}
+      hotpot.push(student.id)
+    }
+    else if(last_evaluation.flag === color ) hotpot.push(student.id)
+  })
+  let number = Math.floor(Math.random() * (hotpot.length - 0));
+  return hotpot[number];
 }

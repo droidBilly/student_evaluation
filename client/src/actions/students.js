@@ -87,3 +87,18 @@ export const deleteStudent = (studentId) => (dispatch, getState) => {
       })
     })
   }
+
+  export const fetchRandom = (batchId) => (dispatch, getState) => {
+    const state = getState()
+    const jwt = state.currentUser.jwt
+
+    request
+      .get(`${baseUrl}/batches/${batchId}/random`)
+      .set('Authorization', `Bearer ${jwt}`)
+      .then(result => {
+        dispatch({
+          type: FETCH_STUDENT,
+          payload: result.body
+        })
+      })
+    }

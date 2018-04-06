@@ -24,11 +24,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
 const entity_2 = require("../students/entity");
-const entity_3 = require("../teachers/entity");
+const entity_3 = require("../batches/entity");
+const entity_4 = require("../teachers/entity");
 const lib_1 = require("../logic/lib");
 let StudentController = class StudentController {
     async addStudent(evaluation, student_id, teacher_id) {
-        const teacher = await entity_3.default.findOneById(teacher_id.teacher_id);
+        const teacher = await entity_4.default.findOneById(teacher_id.teacher_id);
         const student = await entity_2.Student.findOneById(student_id.student_id);
         if (!teacher)
             throw new routing_controllers_1.NotFoundError(`Teacher with id ${teacher_id.teacher_id} does not exist!`);
@@ -64,10 +65,12 @@ let StudentController = class StudentController {
         const { teacher } = evaluation, evaluationData = __rest(evaluation, ["teacher"]);
         return evaluationData;
     }
-    async getRandom() {
-        const color = lib_1.returnFlagWithLikelihood();
+    async getRandom(batchId) {
+        const batch = await entity_3.Batch.findOneById(batchId);
+        return lib_1.returnRandomStudentId(batch.students);
     }
-    async getNext(studentId) {
+    async getNext(batchId) {
+        return { next: 'student3' };
     }
 };
 __decorate([
@@ -87,7 +90,7 @@ __decorate([
     __param(1, routing_controllers_1.CurrentUser()),
     __param(2, routing_controllers_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, entity_3.default, Object]),
+    __metadata("design:paramtypes", [Number, entity_4.default, Object]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "updateEvaluation", null);
 __decorate([
@@ -106,14 +109,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getEvaluation", null);
 __decorate([
-    routing_controllers_1.Get('/evaluations/random'),
+    routing_controllers_1.Get('/batches/:id([0-9]+)/random'),
+    __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getRandom", null);
 __decorate([
     routing_controllers_1.Get('/evaluations/next'),
-    __param(0, routing_controllers_1.Body('student_id')),
+    __param(0, routing_controllers_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)

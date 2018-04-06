@@ -38,6 +38,7 @@ class StudentDetail extends PureComponent {
   }
 
   updateEvaluation = (evaluation) => {
+    console.log(evaluation)
 		this.props.updateEvaluation(
         this.props.student.evaluations.slice(-1)[0].id,
         evaluation.flag,

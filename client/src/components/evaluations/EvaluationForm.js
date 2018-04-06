@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react'
-import { createEvaluation } from '../../actions/evaluations'
+import { getNext } from '../../actions/evaluations'
 import Button from 'material-ui/Button'
-import Save from 'material-ui-icons/Save';
-import history from '../../history';
+import Save from 'material-ui-icons/Save'
+import history from '../../history'
 
 export class EvaluationForm extends PureComponent {
 	state = {}
@@ -48,11 +48,11 @@ export class EvaluationForm extends PureComponent {
 					} onChange={ this.handleChange } />
 				</div>
 
-				<Button variant="raised" size="small" type="submit" color="primary">
+				<Button variant="raised" size="small" type="submit" color="primary" value="back">
 					<Save />Save
 				</Button>
 				<span> </span>
-				<Button variant="raised" size="small" type="submit" color="secondary" onClick={() => { history.push('/') }}>
+				<Button variant="raised" size="small" type="submit" color="secondary" value="next">
 					<Save />Save and next
 				</Button>
 

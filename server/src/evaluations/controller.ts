@@ -1,8 +1,9 @@
 import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError, CurrentUser, Patch, UnauthorizedError } from 'routing-controllers'
 import { Evaluation } from './entity'
 import { Student } from '../students/entity'
+import { Batch } from '../batches/entity'
 import Teacher from '../teachers/entity'
-import {returnFlagWithLikelihood} from '../logic/lib'
+import { returnRandomStudentId } from '../logic/lib'
 
 @JsonController()
 export default class StudentController {
@@ -61,16 +62,20 @@ export default class StudentController {
     return evaluationData
   }
 
-  @Get('/evaluations/random')
-  async getRandom() {
-    const color = returnFlagWithLikelihood()
-
+  @Get('/batches/:id([0-9]+)/random')
+  async getRandom(
+    @Param('id') batchId: number,
+  ) {
+    const batch = await Batch.findOneById(batchId)
+    return returnRandomStudentId(batch.students)
   }
 
+  // @Authorized()
   @Get('/evaluations/next')
   async getNext(
-    @Body('student_id') studentId : Number
+    @Body() batchId : number
   ) {
 
+      return {next: 'student3'}
   }
 }

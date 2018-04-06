@@ -1,9 +1,6 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
 import {fetchUser} from '../../actions/users'
 import BatchStart from '../batches/BatchStart'
 

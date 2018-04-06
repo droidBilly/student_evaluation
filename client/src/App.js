@@ -7,9 +7,7 @@ import EvaluationPage from './components/evaluations/EvaluationPage'
 import TopBar from './components/layout/TopBar'
 import LogoutPage from './components/logout/LogoutPage'
 import IndexPage from './components/index/IndexPage'
-import BatchForm from './components/batches/BatchForm'
 import BatchDetails from './components/batches/BatchDetails'
-import StudentForm from './components/students/StudentForm'
 import StudentDetails from './components/students/StudentDetails'
 
 class App extends Component {

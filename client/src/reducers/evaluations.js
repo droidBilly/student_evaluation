@@ -1,4 +1,4 @@
-import {FETCH_EVALUATION, UPDATE_EVALUATION} from '../actions/evaluations'
+import {FETCH_EVALUATION, UPDATE_EVALUATION, FETCH_NEXT} from '../actions/evaluations'
 
 export default function (state = [], {type, payload}) {
 	switch (type) {
@@ -6,6 +6,8 @@ export default function (state = [], {type, payload}) {
 			return payload
     case UPDATE_EVALUATION:
       return payload
+		case FETCH_NEXT:
+			return [...state, payload]
 		default:
       return state
 	}
