@@ -71,6 +71,12 @@ class StudentDetail extends PureComponent {
   render() {
     const student = this.props.student || []
     const evaluations = this.props.student.evaluations || []
+    const last_evaluation = evaluations.slice(-1)[0] || {}
+    const today = new Date().toJSON().slice(0,10)
+    const initial_last_evaluation = ''
+    if (last_evaluation.date === today) {this.initial_last_evaluation = last_evaluation}
+    else {this.initial_last_evaluation = ''}
+
 		return (
 			<div>
         <Card>
@@ -87,7 +93,7 @@ class StudentDetail extends PureComponent {
             <br />
             <p>Evaluations: {evaluations.map(evaluation => this.renderEvaluation(evaluation))}</p>
             <br />
-            <EvaluationForm onSubmit={this.createEvaluation} />
+             <EvaluationForm initialValues={this.initial_last_evaluation} onSubmit={this.createEvaluation} />
           </CardContent>
         </Card>
 			</div>

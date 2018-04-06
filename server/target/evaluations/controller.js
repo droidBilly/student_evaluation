@@ -65,6 +65,7 @@ let StudentController = class StudentController {
     }
 };
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Post('/evaluations'),
     __param(0, routing_controllers_1.Body()),
     __param(1, routing_controllers_1.Body('student_id')),

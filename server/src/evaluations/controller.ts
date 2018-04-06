@@ -6,7 +6,7 @@ import Teacher from '../teachers/entity'
 @JsonController()
 export default class StudentController {
 
-  // @Authorized() //TODO: activate Authorized
+  @Authorized()
   @Post('/evaluations')
   async addStudent(
     @Body() evaluation: Evaluation
