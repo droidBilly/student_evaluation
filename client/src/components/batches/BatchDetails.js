@@ -15,7 +15,7 @@ import AddIcon from 'material-ui-icons/Add';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Tooltip from 'material-ui/Tooltip';
 import { withStyles } from 'material-ui/styles';
-
+import history from '../../history'
 import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
@@ -94,7 +94,7 @@ class BatchDetail extends PureComponent {
           <Link to={`/batches/${this.props.match.params.batchId}/students/${student.id}`}>
             <img className="profilePicture" src={`${student.profile_pic}`} />
             </Link>
-            <GridListTileBar title={ student.first_name } subtitle={student.last_name} actionIcon={student.evaluations }/>
+            <GridListTileBar title={ student.first_name } subtitle={student.last_name} actionIcon={<div className={`${student.evaluations}`}></div>}/>
         </GridListTile>
       )}
 
@@ -129,6 +129,9 @@ class BatchDetail extends PureComponent {
             { this.state.update && <BatchForm onSubmit={this.updateBatch} />}
             <Button size="medium" onClick={this.toggleUpdate}>
               Edit Batch
+            </Button>
+            <Button size="medium" onClick={history.goBack}>
+              Go back
             </Button>
             <br />
             <br />

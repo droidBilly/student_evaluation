@@ -55,6 +55,9 @@ export class EvaluationForm extends PureComponent {
 				<Button variant="raised" size="small" type="submit" color="secondary" value="next">
 					<Save />Save and next
 				</Button>
+				<Button size="medium" onClick={history.goBack}>
+					Go back
+				</Button>
 
 			</form>
 		)

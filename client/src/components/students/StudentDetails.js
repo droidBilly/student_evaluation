@@ -15,6 +15,7 @@ import Avatar from 'material-ui/Avatar';
 import ImageIcon from 'material-ui-icons/Image';
 import WorkIcon from 'material-ui-icons/Work';
 import BeachAccessIcon from 'material-ui-icons/BeachAccess';
+import history from '../../history';
 
 class StudentDetail extends PureComponent {
   state = {
@@ -99,6 +100,10 @@ class StudentDetail extends PureComponent {
               Delete Student
             </Button>
             <br />
+            <br />
+            <Button size="medium" onClick={history.goBack}>
+              Go back
+            </Button>
             <div className="evaluationList">
               <List>
                 {evaluations.map(evaluation => this.renderEvaluation(evaluation))}
