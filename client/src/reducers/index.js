@@ -6,6 +6,7 @@ import batch from './batch'
 import students from './students'
 import teacher from './teacher'
 import evaluations from './evaluations'
+import random from './random'
 
 export default {
   login,
@@ -15,5 +16,6 @@ export default {
   batch,
   students,
   teacher,
-  evaluations
+  evaluations,
+  random
 }

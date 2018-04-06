@@ -3,7 +3,7 @@ import './BatchDetails.css'
 import {connect} from 'react-redux'
 import {Redirect, Link} from 'react-router-dom'
 import {fetchBatch, updateBatch} from '../../actions/batches'
-import {deleteStudent, createStudent} from '../../actions/students'
+import {deleteStudent, createStudent, fetchRandom} from '../../actions/students'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
@@ -35,6 +35,7 @@ class BatchDetail extends PureComponent {
 
   componentWillMount() {
     this.props.fetchBatch(this.props.match.params.batchId)
+    this.props.fetchRandom(this.props.match.params.batchId)
   }
 
   deleteStudent = (studentId) => {
@@ -115,8 +116,9 @@ class BatchDetail extends PureComponent {
             <br />
             <br />
             <Button size="large" color="secondary" variant="raised">
-              <Link className="link" to={`/batches/${batch.id}/students/random`}>Ask Question</Link>
+              <Link className="link" to={`/batches/${batch.id}/students/${this.props.random}`}>Ask Question</Link>
             </Button>
+            <br />
             <br />
             <div className="progress">
               <div style={redStyle}>{Math.round(status_bar.red)} %</div>
@@ -141,8 +143,9 @@ class BatchDetail extends PureComponent {
 
 const mapStateToProps = function (state) {
 	return {
-		batch: state.batch
+		batch: state.batch,
+    random: state.random
 	}
 }
 
-export default connect(mapStateToProps, {fetchBatch, deleteStudent,createStudent, updateBatch})(BatchDetail)
+export default connect(mapStateToProps, {fetchBatch, deleteStudent,createStudent, updateBatch, fetchRandom})(BatchDetail)

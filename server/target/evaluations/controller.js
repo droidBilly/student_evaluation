@@ -109,6 +109,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getEvaluation", null);
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/batches/:id([0-9]+)/random'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),

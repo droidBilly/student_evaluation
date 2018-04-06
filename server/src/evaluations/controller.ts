@@ -62,6 +62,7 @@ export default class StudentController {
     return evaluationData
   }
 
+  @Authorized()
   @Get('/batches/:id([0-9]+)/random')
   async getRandom(
     @Param('id') batchId: number,
@@ -70,7 +71,7 @@ export default class StudentController {
     return returnRandomStudentId(batch.students)
   }
 
-  // @Authorized()
+  // @Authorized() //TODO: activate Authorized after finishing
   @Get('/evaluations/next')
   async getNext(
     @Body() batchId : number

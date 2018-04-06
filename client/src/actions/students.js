@@ -7,6 +7,7 @@ export const FETCH_STUDENT = 'FETCH_STUDENT'
 export const FETCH_STUDENTS = 'FETCH_STUDENTS'
 export const DELETE_STUDENT = 'DELETE_STUDENT'
 export const UPDATE_STUDENT = 'UPDATE_STUDENT'
+export const FETCH_RANDOM = 'FETCH_RANDOM'
 
 export const fetchStudents = () => (dispatch, getState) => {
   const state = getState()
@@ -97,7 +98,7 @@ export const deleteStudent = (studentId) => (dispatch, getState) => {
       .set('Authorization', `Bearer ${jwt}`)
       .then(result => {
         dispatch({
-          type: FETCH_STUDENT,
+          type: FETCH_RANDOM,
           payload: result.body
         })
       })

@@ -77,7 +77,6 @@ class StudentDetail extends PureComponent {
       </Card>)
     }
 
-
   render() {
     const student = this.props.student || []
     const evaluations = this.props.student.evaluations || []
