@@ -52,6 +52,7 @@ export const updateEvaluation = (evaluationId, flag, remark, date) => (dispatch,
         type: UPDATE_EVALUATION,
         payload: result.body
       })
+      history.go()
     })
     .catch(err => console.error(err))
 }

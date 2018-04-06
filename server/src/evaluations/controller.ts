@@ -2,6 +2,7 @@ import { JsonController, Post, Body, Authorized, Get, Param, NotFoundError, Curr
 import { Evaluation } from './entity'
 import { Student } from '../students/entity'
 import Teacher from '../teachers/entity'
+import {returnFlagWithLikelihood} from '../logic/lib'
 
 @JsonController()
 export default class StudentController {
@@ -35,8 +36,8 @@ export default class StudentController {
     const evaluation = await Evaluation.findOneById(evaluationId)
     if (!evaluation) throw new NotFoundError('Evaluation does not exist!')
     if (evaluation.teacher.id !== currentTeacher.id) throw new UnauthorizedError('You are not allowed to edit other teachers evaluation')
-    await Evaluation.merge(evaluation, update).save()
-    const {teacher, ...evaluationData} = evaluation
+    const new_evaluation = await Evaluation.merge(evaluation, update).save()
+    const {teacher, ...evaluationData} = new_evaluation
     return evaluationData
   }
 
@@ -48,7 +49,6 @@ export default class StudentController {
       const {teacher, ...evaluationData} = evaluation
       return evaluationData
     })
-
   }
 
   @Authorized()
@@ -59,5 +59,11 @@ export default class StudentController {
     const evaluation = await Evaluation.findOneById(id)
     const {teacher, ...evaluationData} = evaluation
     return evaluationData
+  }
+
+  @Get('/evaluations/random')
+  async getRandom() {
+    const color = returnFlagWithLikelihood()
+
   }
 }

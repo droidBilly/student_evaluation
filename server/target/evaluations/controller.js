@@ -25,6 +25,7 @@ const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
 const entity_2 = require("../students/entity");
 const entity_3 = require("../teachers/entity");
+const lib_1 = require("../logic/lib");
 let StudentController = class StudentController {
     async addStudent(evaluation, student_id, teacher_id) {
         const teacher = await entity_3.default.findOneById(teacher_id.teacher_id);
@@ -47,8 +48,8 @@ let StudentController = class StudentController {
             throw new routing_controllers_1.NotFoundError('Evaluation does not exist!');
         if (evaluation.teacher.id !== currentTeacher.id)
             throw new routing_controllers_1.UnauthorizedError('You are not allowed to edit other teachers evaluation');
-        await entity_1.Evaluation.merge(evaluation, update).save();
-        const { teacher } = evaluation, evaluationData = __rest(evaluation, ["teacher"]);
+        const new_evaluation = await entity_1.Evaluation.merge(evaluation, update).save();
+        const { teacher } = new_evaluation, evaluationData = __rest(new_evaluation, ["teacher"]);
         return evaluationData;
     }
     async getEvaluations() {
@@ -62,6 +63,9 @@ let StudentController = class StudentController {
         const evaluation = await entity_1.Evaluation.findOneById(id);
         const { teacher } = evaluation, evaluationData = __rest(evaluation, ["teacher"]);
         return evaluationData;
+    }
+    async getRandom() {
+        const color = lib_1.returnFlagWithLikelihood();
     }
 };
 __decorate([
@@ -99,6 +103,12 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getEvaluation", null);
+__decorate([
+    routing_controllers_1.Get('/evaluations/random'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], StudentController.prototype, "getRandom", null);
 StudentController = __decorate([
     routing_controllers_1.JsonController()
 ], StudentController);

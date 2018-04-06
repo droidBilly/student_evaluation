@@ -37,3 +37,18 @@ export function returnLastFlagColor(students) {
       student.evaluations = student.evaluations.slice(-1)[0].flag
   })
 }
+
+export function returnFlagWithLikelihood() {
+  let flags = ['red','yellow','green'];
+  let likelihood = [0.53, 0.28, 0.19];
+  let random_num = Math.random() * (1 - 0);
+  let weight_sum = 0;
+
+  for (var i = 0; i < flags.length; i++) {
+      weight_sum += likelihood[i];
+      weight_sum = +weight_sum.toFixed(2);
+      if (random_num <= weight_sum) {
+          return flags[i];
+      }
+  }
+}

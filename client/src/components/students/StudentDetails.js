@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
 import EvaluationForm from '../evaluations/EvaluationForm'
 import StudentForm from './StudentForm'
-import {createEvaluation} from '../../actions/evaluations'
+import {createEvaluation, updateEvaluation} from '../../actions/evaluations'
 import {fetchUser} from '../../actions/users'
 
 class StudentDetail extends PureComponent {
@@ -36,6 +36,15 @@ class StudentDetail extends PureComponent {
     )
     this.toggleEdit()
   }
+
+  updateEvaluation = (evaluation) => {
+		this.props.updateEvaluation(
+        this.props.student.evaluations.slice(-1)[0].id,
+        evaluation.flag,
+        evaluation.remark,
+        evaluation.date
+      )
+	}
 
   createEvaluation = (evaluation) => {
     this.props.createEvaluation(
@@ -74,8 +83,9 @@ class StudentDetail extends PureComponent {
     const last_evaluation = evaluations.slice(-1)[0] || {}
     const today = new Date().toJSON().slice(0,10)
     const initial_last_evaluation = ''
-    if (last_evaluation.date === today) {this.initial_last_evaluation = last_evaluation}
-    else {this.initial_last_evaluation = ''}
+    const savingMethod = this.createeEvaluation
+    if (last_evaluation.date === today) {this.initial_last_evaluation = last_evaluation; this.savingMethod = this.updateEvaluation}
+    else {this.initial_last_evaluation = ''; this.savingMethod = this.createEvaluation}
 
 		return (
 			<div>
@@ -93,7 +103,7 @@ class StudentDetail extends PureComponent {
             <br />
             <p>Evaluations: {evaluations.map(evaluation => this.renderEvaluation(evaluation))}</p>
             <br />
-             <EvaluationForm initialValues={this.initial_last_evaluation} onSubmit={this.createEvaluation} />
+             <EvaluationForm initialValues={this.initial_last_evaluation} onSubmit={this.savingMethod} />
           </CardContent>
         </Card>
 			</div>
@@ -108,4 +118,4 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps, {fetchStudent, fetchUser, updateStudent, createEvaluation})(StudentDetail)
+export default connect(mapStateToProps, {updateEvaluation, fetchStudent, fetchUser, updateStudent, createEvaluation})(StudentDetail)
