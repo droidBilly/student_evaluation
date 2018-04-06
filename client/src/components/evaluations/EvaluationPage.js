@@ -4,7 +4,6 @@ import {updateEvaluation, fetchEvaluation} from '../../actions/evaluations'
 import EvaluationForm from './EvaluationForm'
 import {Redirect} from 'react-router-dom'
 import {fetchUser} from '../../actions/users'
-import {fetchStudent} from '../../actions/students'
 
 class EvaluationPage extends PureComponent {
 
@@ -17,8 +16,7 @@ class EvaluationPage extends PureComponent {
         this.props.match.params.id,
         evaluation.flag,
         evaluation.remark,
-        evaluation.date,
-        this.props.teacher.id,
+        evaluation.date
       )
 	}
 
@@ -35,10 +33,9 @@ class EvaluationPage extends PureComponent {
 
 const mapStateToProps = function (state) {
 	return {
-    student: state.students,
     teacher: state.teacher,
     evaluations: state.evaluations
 	}
 }
 
-export default connect(mapStateToProps, {fetchEvaluation, fetchStudent, fetchUser, updateEvaluation})(EvaluationPage)
+export default connect(mapStateToProps, {fetchEvaluation, fetchUser, updateEvaluation})(EvaluationPage)

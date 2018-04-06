@@ -18,7 +18,7 @@ class BatchList extends PureComponent {
         <CardContent>
           <Typography variant="headline" component="h2">
             <Link to={`/batches/${batch.id}`}>
-              { batch.name }
+              Batch #{ batch.name }
             </Link>
           </Typography>
           <Typography color="textSecondary">

@@ -20,6 +20,15 @@ let BatchController = class BatchController {
         const entity = entity_1.Batch.create(batch);
         return entity.save();
     }
+    async updateBatch(batchId, update) {
+        const batch = await entity_1.Batch.findOneById(batchId);
+        if (!batch)
+            throw new routing_controllers_1.NotFoundError('Batch does not exist!');
+        const updated_batch = await entity_1.Batch.merge(batch, update).save();
+        lib_1.returnBatchPercentages(updated_batch);
+        lib_1.returnLastFlagColor(updated_batch.students);
+        return updated_batch;
+    }
     async getBatches() {
         const batches = await entity_1.Batch.find();
         batches.sort(function (a, b) { return a.id - b.id; });
@@ -42,6 +51,7 @@ let BatchController = class BatchController {
     }
 };
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Post('/batches'),
     __param(0, routing_controllers_1.Body()),
     __metadata("design:type", Function),
@@ -49,12 +59,23 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BatchController.prototype, "createBatch", null);
 __decorate([
+    routing_controllers_1.Authorized(),
+    routing_controllers_1.Patch('/batches/:id([0-9]+)'),
+    __param(0, routing_controllers_1.Param('id')),
+    __param(1, routing_controllers_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], BatchController.prototype, "updateBatch", null);
+__decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/batches'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BatchController.prototype, "getBatches", null);
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/batches/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),

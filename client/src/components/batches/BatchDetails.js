@@ -2,23 +2,31 @@ import React, {PureComponent} from 'react'
 import './BatchDetails.css'
 import {connect} from 'react-redux'
 import {Redirect, Link} from 'react-router-dom'
-import {fetchBatch} from '../../actions/batches'
+import {fetchBatch, updateBatch} from '../../actions/batches'
 import {deleteStudent, createStudent} from '../../actions/students'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
 import BatchList from './BatchList'
+import BatchForm from './BatchForm'
 import StudentForm from '../students/StudentForm'
 
 class BatchDetail extends PureComponent {
   state = {
-    edit: false
+    edit: false,
+    update: false
   }
 
   toggleEdit = () => {
     this.setState({
       edit: !this.state.edit
+    });
+  }
+
+  toggleUpdate = () => {
+    this.setState({
+      update: !this.state.upfate
     });
   }
 
@@ -38,6 +46,16 @@ class BatchDetail extends PureComponent {
       this.props.batch.id
     )
     this.toggleEdit()
+  }
+
+  updateBatch = (batch) => {
+    this.props.updateBatch(
+      this.props.batch.id,
+      batch.name,
+      batch.start_date,
+      batch.end_date
+    )
+    this.toggleUpdate()
   }
 
   renderStudent = (student) => {
@@ -84,20 +102,22 @@ class BatchDetail extends PureComponent {
 			<div>
         <Card>
           <CardContent>
-			      <h1>{batch.name}</h1>
+			      <h1>Batch #{batch.name}</h1>
             <p>Start date: {batch.start_date}</p>
             <p>End date: {batch.end_date}</p>
+            { this.state.update && <BatchForm onSubmit={this.updateBatch} />}
+            <Button size="medium" onClick={this.toggleUpdate}>
+              Edit Batch
+            </Button>
+            <br />
             <div className="progress">
               <div style={redStyle}>{Math.round(status_bar.red)} %</div>
               <div style={yellowStyle}>{Math.round(status_bar.yellow)} %</div>
               <div style={greenStyle}>{Math.round(status_bar.green)} %</div>
               <div style={greyStyle}>{Math.round(status_bar.grey)} %</div>
             </div>
-            <p>Students: {students.map(student => this.renderStudent(student))}</p>
+            Students: {students.map(student => this.renderStudent(student))}
             <br />
-            <Button size="medium">
-            <Link className="link" to="/batches/new">Edit Batch</Link>
-            </Button>
             { this.state.edit && <StudentForm onSubmit={this.createStudent} />}
             <Button size="medium" onClick={this.toggleEdit}>
               Add Student
@@ -115,4 +135,4 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps, {fetchBatch, deleteStudent,createStudent})(BatchDetail)
+export default connect(mapStateToProps, {fetchBatch, deleteStudent,createStudent, updateBatch})(BatchDetail)
