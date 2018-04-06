@@ -23,7 +23,7 @@ class StudentDetail extends PureComponent {
   }
 
   componentWillMount() {
-    this.props.fetchStudent(this.props.match.params.id)
+    this.props.fetchStudent(this.props.match.params.studentId)
     this.props.fetchUser()
   }
 
@@ -70,7 +70,7 @@ class StudentDetail extends PureComponent {
 
         <CardActions>
           <Button size="small">
-            <Link className="link" to={`/evaluations/${evaluation.id}`}>Edit Evaluation</Link>
+            <Link className="link" to={`/batches/${this.props.match.params.batchId}/students/${this.props.match.params.studentId}/evaluations/${evaluation.id}`}>Edit Evaluation</Link>
           </Button>
         </CardActions>
       </Card>)

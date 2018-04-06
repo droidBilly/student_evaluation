@@ -29,12 +29,12 @@ class BatchDetail extends PureComponent {
 
   toggleUpdate = () => {
     this.setState({
-      update: !this.state.upfate
+      update: !this.state.update
     });
   }
 
   componentWillMount() {
-    this.props.fetchBatch(this.props.match.params.id)
+    this.props.fetchBatch(this.props.match.params.batchId)
   }
 
   deleteStudent = (studentId) => {
@@ -66,11 +66,11 @@ class BatchDetail extends PureComponent {
       return (<Card key={student.id} className="batch-card">
         <CardContent>
           <Typography variant="headline" component="h2">
-            <Link to={`/students/${student.id}`}>
+            <Link to={`/batches/${this.props.match.params.batchId}/students/${student.id}`}>
               { student.first_name } {student.last_name}
             </Link>
           </Typography>
-          <Link to={`/students/${student.id}`}>
+          <Link to={`/batches/${this.props.match.params.batchId}/students/${student.id}`}>
             <img className="profilePicture" src={`${student.profile_pic}`} />
           </Link>
           <Typography color="textSecondary">
@@ -115,7 +115,7 @@ class BatchDetail extends PureComponent {
             <br />
             <br />
             <Button size="large" color="secondary" variant="raised">
-              <Link className="link" to={`/batches/${batch.id}/random`}>Ask Question</Link>
+              <Link className="link" to={`/batches/${batch.id}/students/random`}>Ask Question</Link>
             </Button>
             <br />
             <div className="progress">

@@ -21,13 +21,11 @@ class App extends Component {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/logout" component={LogoutPage} />
             <Route exact path="/teachers" component={SignupPage} />
-            <Route exact path="/index" component={IndexPage} />
-            <Route exact path="/batches/new" component={BatchForm} />
-             <Route exact path="/batches/:id" component={BatchDetails} />
-             <Route exact path="/students/new" component={StudentForm} />
-             <Route exact path="/students/:id" component={StudentDetails} />
-             <Route exact path="/evaluations/:id" component={EvaluationPage} />
-            <Route exact path="/" render={ () => <Redirect to="/index" /> } />
+            <Route exact path="/batches" component={IndexPage} />
+             <Route exact path="/batches/:batchId" component={BatchDetails} />
+             <Route exact path="/batches/:batchId/students/:studentId" component={StudentDetails} />
+             <Route exact path="/batches/:batchId/students/:studentId/evaluations/:evaluationId" component={EvaluationPage} />
+            <Route exact path="/" render={ () => <Redirect to="/batches" /> } />
           </div>
       </Router>
     )

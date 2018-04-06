@@ -31,7 +31,7 @@ function ButtonAppBar(props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.flex}>
-            <Link to="/">Student Evaluations</Link>
+            <Link className="header" to="/">Student Evaluations :{'{'}) </Link>
           </Typography>
           {
             location.pathname.indexOf('teachers') > 0 &&
@@ -42,8 +42,8 @@ function ButtonAppBar(props) {
             <Button color="inherit" onClick={() => history.push('/signup')}>Sign up</Button>
           }
           {
-            location.pathname.indexOf('index/') > 0 &&
-            <Button color="inherit" onClick={() => history.push('/index')}>Home</Button>
+            location.pathname.indexOf('/') > 0 &&
+            <Button color="inherit" onClick={() => history.push('/')}>Home</Button>
           }
           {
             /index$/.test(location.pathname) &&

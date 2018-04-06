@@ -67,6 +67,8 @@ let StudentController = class StudentController {
     async getRandom() {
         const color = lib_1.returnFlagWithLikelihood();
     }
+    async getNext(studentId) {
+    }
 };
 __decorate([
     routing_controllers_1.Authorized(),
@@ -109,6 +111,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getRandom", null);
+__decorate([
+    routing_controllers_1.Get('/evaluations/next'),
+    __param(0, routing_controllers_1.Body('student_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], StudentController.prototype, "getNext", null);
 StudentController = __decorate([
     routing_controllers_1.JsonController()
 ], StudentController);

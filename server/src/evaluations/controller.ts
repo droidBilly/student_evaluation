@@ -66,4 +66,11 @@ export default class StudentController {
     const color = returnFlagWithLikelihood()
 
   }
+
+  @Get('/evaluations/next')
+  async getNext(
+    @Body('student_id') studentId : Number
+  ) {
+
+  }
 }

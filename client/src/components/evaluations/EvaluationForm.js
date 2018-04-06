@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import { createEvaluation } from '../../actions/evaluations'
 import Button from 'material-ui/Button'
 import Save from 'material-ui-icons/Save';
+import history from '../../history';
 
 export class EvaluationForm extends PureComponent {
 	state = {}
@@ -21,7 +22,7 @@ export class EvaluationForm extends PureComponent {
 
 	render() {
 		const initialValues = this.props.initialValues || {}
-		
+
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<div>
@@ -51,7 +52,7 @@ export class EvaluationForm extends PureComponent {
 					<Save />Save
 				</Button>
 				<span> </span>
-				<Button variant="raised" size="small" type="submit" color="secondary">
+				<Button variant="raised" size="small" type="submit" color="secondary" onClick={() => { history.push('/') }}>
 					<Save />Save and next
 				</Button>
 
