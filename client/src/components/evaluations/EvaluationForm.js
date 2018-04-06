@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react'
 import { createEvaluation } from '../../actions/evaluations'
 import Button from 'material-ui/Button'
+import Save from 'material-ui-icons/Save';
 
 export class EvaluationForm extends PureComponent {
 	state = {}
@@ -47,7 +48,9 @@ export class EvaluationForm extends PureComponent {
 					} onChange={ this.handleChange } />
 				</div>
 
-				<Button type="submit">Safe</Button>
+				<Button variant="raised" size="small" type="submit">
+					<Save />Save
+				</Button>
 			</form>
 		)
 	}

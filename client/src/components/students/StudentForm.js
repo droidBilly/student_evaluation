@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import Button from 'material-ui/Button'
+import Save from 'material-ui-icons/Save';
 
 export class StudentForm extends PureComponent {
 	state = {}
@@ -43,7 +44,9 @@ export class StudentForm extends PureComponent {
 					} onChange={ this.handleChange } />
 				</div>
 
-			  <Button size="medium" type="submit">Save</Button>
+				<Button variant="raised" size="small" type="submit">
+					<Save />Save
+				</Button>
 			</form>
 		)
 	}

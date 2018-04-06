@@ -9,6 +9,8 @@ import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
 import BatchList from './BatchList'
 import BatchForm from './BatchForm'
+import AddIcon from 'material-ui-icons/Add';
+import Tooltip from 'material-ui/Tooltip';
 
 class BatchStart extends PureComponent {
   state = {
@@ -39,9 +41,11 @@ class BatchStart extends PureComponent {
               <BatchList />
               <br />
               { this.state.edit && <BatchForm onSubmit={this.createBatch} />}
-              <Button size="medium" onClick={this.toggleEdit}>
-                Add Batch
-              </Button>
+              <Tooltip id="tooltip-fab" title="Add new batch">
+                <Button size="medium" onClick={this.toggleEdit} variant="fab" color="primary" aria-label="add" alt="sdfasd">
+                  <AddIcon />
+                </Button>
+              </Tooltip>
             </CardContent>
           </Card>
   			</div>

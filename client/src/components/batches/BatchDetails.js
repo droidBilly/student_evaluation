@@ -11,6 +11,9 @@ import Button from 'material-ui/Button'
 import BatchList from './BatchList'
 import BatchForm from './BatchForm'
 import StudentForm from '../students/StudentForm'
+import AddIcon from 'material-ui-icons/Add';
+import DeleteIcon from 'material-ui-icons/Delete';
+import Tooltip from 'material-ui/Tooltip';
 
 class BatchDetail extends PureComponent {
   state = {
@@ -110,6 +113,11 @@ class BatchDetail extends PureComponent {
               Edit Batch
             </Button>
             <br />
+            <br />
+            <Button size="large" color="secondary" variant="raised">
+              <Link className="link" to={`/batches/${batch.id}/random`}>Ask Question</Link>
+            </Button>
+            <br />
             <div className="progress">
               <div style={redStyle}>{Math.round(status_bar.red)} %</div>
               <div style={yellowStyle}>{Math.round(status_bar.yellow)} %</div>
@@ -119,9 +127,11 @@ class BatchDetail extends PureComponent {
             Students: {students.map(student => this.renderStudent(student))}
             <br />
             { this.state.edit && <StudentForm onSubmit={this.createStudent} />}
-            <Button size="medium" onClick={this.toggleEdit}>
-              Add Student
-            </Button>
+            <Tooltip id="tooltip-fab" title="Add Student">
+              <Button size="medium" onClick={this.toggleEdit} variant="fab" color="primary" aria-label="add" alt="sdfasd">
+                <AddIcon />
+              </Button>
+            </Tooltip>
           </CardContent>
         </Card>
 			</div>

@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react'
 import { createBatch } from '../../actions/batches'
 import Button from 'material-ui/Button'
+import Save from 'material-ui-icons/Save';
 
 export class BatchForm extends PureComponent {
 	state = {}
@@ -42,7 +43,10 @@ export class BatchForm extends PureComponent {
 					} onChange={ this.handleChange } />
 				</div>
 
-				<Button size="medium" type="submit">Save</Button>
+				<Button variant="raised" size="small" type="submit">
+	        <Save  />
+		        Save
+	      </Button>
 			</form>
 		)
 	}
