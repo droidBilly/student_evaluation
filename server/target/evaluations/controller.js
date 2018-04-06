@@ -39,11 +39,11 @@ let StudentController = class StudentController {
         await entity.save();
         return student;
     }
-    async updateEvaluation(evaluationId, teacher, update) {
+    async updateEvaluation(evaluationId, currentTeacher, update) {
         const evaluation = await entity_1.Evaluation.findOneById(evaluationId);
         if (!evaluation)
             throw new routing_controllers_1.NotFoundError('Evaluation does not exist!');
-        if (evaluation.teacher.id !== teacher.id)
+        if (evaluation.teacher.id !== currentTeacher.id)
             throw new routing_controllers_1.UnauthorizedError('You are not allowed to edit other teachers evaluation');
         await entity_1.Evaluation.merge(evaluation, update).save();
         const { teacher } = evaluation, evaluationData = __rest(evaluation, ["teacher"]);
@@ -78,17 +78,18 @@ __decorate([
     __param(1, routing_controllers_1.CurrentUser()),
     __param(2, routing_controllers_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, entity_3.default,
-        entity_1.Evaluation]),
+    __metadata("design:paramtypes", [Number, entity_3.default, Object]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "updateEvaluation", null);
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/evaluations'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getEvaluations", null);
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Get('/evaluations/:id([0-9]+)'),
     __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),

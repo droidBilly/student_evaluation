@@ -38,7 +38,6 @@ class StudentDetail extends PureComponent {
   }
 
   createEvaluation = (evaluation) => {
-    console.log(this.props.currentUser.id)
     this.props.createEvaluation(
       evaluation.flag,
       evaluation.remark,
@@ -62,7 +61,7 @@ class StudentDetail extends PureComponent {
 
         <CardActions>
           <Button size="small">
-            <Link className="link" to={`/batches/`}>Edit Evaluation</Link>
+            <Link className="link" to={`/evaluations/${evaluation.id}`}>Edit Evaluation</Link>
           </Button>
         </CardActions>
       </Card>)

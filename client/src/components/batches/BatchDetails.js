@@ -56,14 +56,6 @@ class BatchDetail extends PureComponent {
             Last evaluation: {student.evaluations}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">
-            <Link to={`/students/${student.id}`}>Edit Student</Link>
-          </Button>
-          <Button size="small" onClick={() => { if (window.confirm('Are you sure you wish to delete this student?')) this.deleteStudent(student.id) } }>
-            Delete Student
-          </Button>
-        </CardActions>
       </Card>)
     }
 

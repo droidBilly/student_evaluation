@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/signup/SignupPage'
+import EvaluationPage from './components/evaluations/EvaluationPage'
 import TopBar from './components/layout/TopBar'
 import LogoutPage from './components/logout/LogoutPage'
 import IndexPage from './components/index/IndexPage'
@@ -25,6 +26,7 @@ class App extends Component {
              <Route exact path="/batches/:id" component={BatchDetails} />
              <Route exact path="/students/new" component={StudentForm} />
              <Route exact path="/students/:id" component={StudentDetails} />
+             <Route exact path="/evaluations/:id" component={EvaluationPage} />
             <Route exact path="/" render={ () => <Redirect to="/index" /> } />
           </div>
       </Router>

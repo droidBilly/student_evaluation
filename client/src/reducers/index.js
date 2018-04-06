@@ -4,6 +4,7 @@ import signup from './signup'
 import batches from './batches'
 import students from './students'
 import teacher from './teacher'
+import evaluations from './evaluations'
 
 export default {
   login,
@@ -11,5 +12,6 @@ export default {
   signup,
   batches,
   students,
-  teacher
+  teacher,
+  evaluations
 }

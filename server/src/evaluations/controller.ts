@@ -28,18 +28,18 @@ export default class StudentController {
   @Patch('/evaluations/:id([0-9]+)')
   async updateEvaluation(
     @Param('id') evaluationId: number,
-    @CurrentUser() teacher: Teacher,
-    @Body() update: Evaluation
+    @CurrentUser() currentTeacher: Teacher,
+    @Body() update: Partial<Evaluation>
   ) {
     const evaluation = await Evaluation.findOneById(evaluationId)
     if (!evaluation) throw new NotFoundError('Evaluation does not exist!')
-    if (evaluation.teacher.id !== teacher.id) throw new UnauthorizedError('You are not allowed to edit other teachers evaluation')
+    if (evaluation.teacher.id !== currentTeacher.id) throw new UnauthorizedError('You are not allowed to edit other teachers evaluation')
     await Evaluation.merge(evaluation, update).save()
     const {teacher, ...evaluationData} = evaluation
     return evaluationData
   }
 
-  // @Authorized() //TODO: activate Authorized
+  @Authorized()
   @Get('/evaluations')
   async getEvaluations() {
     const evaluations = await Evaluation.find()
@@ -50,7 +50,7 @@ export default class StudentController {
 
   }
 
-  // @Authorized() //TODO: activate Authorized
+  @Authorized()
   @Get('/evaluations/:id([0-9]+)')
   async getEvaluation(
     @Param('id') id: number

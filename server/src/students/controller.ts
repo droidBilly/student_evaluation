@@ -20,7 +20,7 @@ export default class StudentController {
       return entity.save()
     }
 
-  // @Authorized() /TODO: activate Authorized again!
+  @Authorized()
   @Get('/students')
   async getStudents() {
     const students = await Student.find()

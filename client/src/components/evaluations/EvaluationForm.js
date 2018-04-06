@@ -20,6 +20,7 @@ export class EvaluationForm extends PureComponent {
 
 	render() {
 		const initialValues = this.props.initialValues || {}
+		console.log(initialValues)
 
 		return (
 			<form onSubmit={this.handleSubmit}>
@@ -46,7 +47,7 @@ export class EvaluationForm extends PureComponent {
 					} onChange={ this.handleChange } />
 				</div>
 
-				<button type="submit">Add evaluation</button>
+				<Button type="submit">Safe</Button>
 			</form>
 		)
 	}
